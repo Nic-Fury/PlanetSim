@@ -3,11 +3,24 @@
 void main() {
     //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
     // to see how IntelliJ IDEA suggests fixing it.
-    IO.println(String.format("Hello and welcome!"));
+    IO.println(String.format("Welcome to Planet Sim!"));
 
-    for (int i = 1; i <= 5; i++) {
-        //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-        // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-        IO.println("i = " + i);
+    //game loop
+    while (true) {
+        //Planet name
+        IO.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+        String chosenPlantName = IO.readln("Enter the Name of your Planet: ");
+        IO.println("Planet Name: " + chosenPlantName);
+        //Difficulty
+        IO.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+        String chosenDifficultyString = IO.readln("Choose your Difficulty: ");
+        int chosenDifficultyInt = Integer.parseInt(chosenDifficultyString);
+        IO.println("Difficulty: " + chosenDifficultyInt);
+        IO.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+
+        ActionMenu.runActionMenu();
+
+
     }
+
 }
