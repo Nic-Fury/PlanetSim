@@ -1,5 +1,5 @@
 /**********************************************************************
- *           Diese Klasse ist dazu da, um das ründliche
+ *           Diese Klasse ist dazu da, um das Runden
  *           AktionsMenü dazustellen und zu verwalten
  *
  *          +----------------------------------+
@@ -22,7 +22,41 @@
 public class ActionMenu {
 
 
-    public static void runActionMenu(){
+    public static String readPlanetName() {
+        IO.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+        String name;
+        while (true) {
+            name = IO.readln("Enter the Name of your Planet: ").trim();
+            if (!name.isEmpty()) {
+                IO.println("Planet Name: " + name);
+                IO.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+                IO.println();
+                return name;
+            }
+            IO.println("Empty Input: Please enter a NAME.");
+        }
+    }
+
+    public static int readDifficulty() {
+        IO.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+        int chosenDifficultyInt;
+        while (true) {
+            String input = IO.readln("Choose your Difficulty: ");
+            try {
+                chosenDifficultyInt = Integer.parseInt(input.trim());
+                break;
+            } catch (NumberFormatException e) {
+                IO.println("Invalid Input: Please enter an INTEGER.");
+            }
+        }
+        IO.println("Difficulty: " + chosenDifficultyInt);
+        IO.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+        IO.println();
+        return chosenDifficultyInt;
+    }
+
+
+    public static void printActionMenu(){
         printResources();
         printActions();
     }
@@ -30,7 +64,8 @@ public class ActionMenu {
 
     public static void printResources(){
         IO.println("+----------------------------------+");
-        IO.println("| Gold: x  |  Holz: x  |  Stein: x |");
+        // From the class GameState we get the resource instances and execute the getAmount() method
+        IO.println("| Gold: " + GameState.getGoldInstance().getAmount() +"  |  Holz: " + GameState.getWoodInstance().getAmount() + "  |  Stein: x |");
         IO.println("+----------------------------------+");
     }
 
