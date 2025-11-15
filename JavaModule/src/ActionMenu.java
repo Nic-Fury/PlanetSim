@@ -63,10 +63,10 @@ public class ActionMenu {
 
 
     public static void printResources(){
-        IO.println("+----------------------------------+");
+        IO.println("+-------------------------------------+");
         // From the class GameState we get the resource instances and execute the getAmount() method
         IO.println("| Gold: " + GameState.getGoldInstance().getAmount() +"  |  Holz: " + GameState.getWoodInstance().getAmount() + "  |  Stein: x |");
-        IO.println("+----------------------------------+");
+        IO.println("+-------------------------------------+");
     }
 
     public static void printActions(){

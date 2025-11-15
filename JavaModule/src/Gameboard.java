@@ -14,10 +14,10 @@
 
 public class Gameboard {
 
-    public static void printPlanet(){
+    public static void printPlanet(int mapSize){
 
 
-        String[][] map = new String[][]
+        String[][] map10 = new String[][]
         {
                 {"BLANC", "BLANC", "BLANC", "GREEN", "GREEN", "GREEN", "GREEN", "BLANC", "BLANC", "BLANC"},
                 {"BLANC", "BLUE",  "BLUE",  "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "BLANC"},
@@ -31,6 +31,8 @@ public class Gameboard {
                 {"BLANC", "BLANC", "BLANC",  "CYAN",   "CYAN",   "CYAN",   "CYAN","BLANC","BLANC","BLANC"}
         };
 
+        //default map
+        String [][] map = map10;
 
         // rows of map
         for (String[] strings : map) {
