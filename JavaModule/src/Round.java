@@ -18,7 +18,7 @@ public class Round {
     }
 
     public static void startRound(int chosenDifficultyInt, int roundCounterInt){
-        Gameboard.printPlanet(chosenDifficultyInt, "gege");
+        Gameboard.printPlanet(chosenDifficultyInt, "green");
         ActionMenu.printActionMenu(roundCounterInt);
     }
 
