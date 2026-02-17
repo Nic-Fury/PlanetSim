@@ -53,9 +53,9 @@ public class ActionMenu {
         return chosenDifficultyInt;
     }
 
-    public static void printActionMenu(){
+    public static void printActionMenu(int roundCounterInt){
         printResources();
-        printActions();
+        printActions(roundCounterInt);
     }
 
     public static void printResources(){
@@ -65,14 +65,14 @@ public class ActionMenu {
         IO.println("+-------------------------------------+");
     }
 
-    public static void printActions(){
+    public static void printActions(int roundCounterInt){
         IO.println("|         Waehle eine Aktion:         |");
         IO.println("| 1. Build                            |");
         IO.println("| 2. Do nothing                       |");
         IO.println("| 3. Exit                             |");
         IO.println("+-------------------------------------+");
         while (true) {
-            String input = IO.readln("Auswahl: (1-3) ");
+            String input = IO.readln("Auswahl Runde "+roundCounterInt+" : (1-3) ");
             int userinput;
             try {
                 userinput = Integer.parseInt(input.trim());

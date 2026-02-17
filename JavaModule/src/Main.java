@@ -2,16 +2,16 @@
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 void main() {
 
-    int roundCounterInt = 0;
+    int roundCounterInt = 1;
     int chosenDifficultyInt = 0;
 
     while (true) {
 
         // first round: welcome message, planet name and difficulty selection, round
-        if (roundCounterInt == 0) {
-            Round.startFirstRound(chosenDifficultyInt);
-        } else if (roundCounterInt > 0) {
-            Round.startRound(chosenDifficultyInt);
+        if (roundCounterInt == 1) {
+            Round.startFirstRound(chosenDifficultyInt, roundCounterInt);
+        } else if (roundCounterInt > 1) {
+            Round.startRound(chosenDifficultyInt, roundCounterInt);
         }
 
         roundCounterInt++;

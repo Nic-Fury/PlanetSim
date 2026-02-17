@@ -1,7 +1,7 @@
 public class Round {
 
 
-    public static void startFirstRound(int chosenDifficultyInt){
+    public static void startFirstRound(int chosenDifficultyInt,  int roundCounterInt){
         //Welcome message
         IO.println();
         IO.println();
@@ -14,12 +14,12 @@ public class Round {
         chosenDifficultyInt = ActionMenu.readDifficulty();
 
 
-        startRound(chosenDifficultyInt);
+        startRound(chosenDifficultyInt, roundCounterInt);
     }
 
-    public static void startRound(int chosenDifficultyInt){
+    public static void startRound(int chosenDifficultyInt, int roundCounterInt){
         Gameboard.printPlanet(chosenDifficultyInt, "gege");
-        ActionMenu.printActionMenu();
+        ActionMenu.printActionMenu(roundCounterInt);
     }
 
 }

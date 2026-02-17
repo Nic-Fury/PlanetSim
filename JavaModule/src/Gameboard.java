@@ -94,7 +94,7 @@ public class Gameboard {
         IO.print(bg + "   " + ANSI_RESET);
     }
 
-    private static void printSingleColorBlockAtCoordinates(String colorName, int x, int y){
+    public static void printSingleColorBlockAtCoordinates(String colorName, int x, int y){
         // Validierung der Koordinaten
         if (x < 0 || x >= 10 || y < 0 || y >= 10 || currentMap == null) {
             IO.println("Ungültige Koordinaten oder Map nicht geladen!");
