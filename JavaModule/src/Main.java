@@ -2,11 +2,9 @@
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 void main() {
 
-
-
-    //game round loop
     int roundCounterInt = 0;
     int chosenDifficultyInt = 0;
+
     while (true) {
 
         // first round: welcome message, planet name and difficulty selection, round

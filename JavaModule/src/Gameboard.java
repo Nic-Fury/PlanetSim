@@ -14,7 +14,16 @@
 
 public class Gameboard {
 
+    private static String[][] currentMap;
+
     public static void printPlanet(int mapSize, String color){
+        currentMap = chooseMap(mapSize, color);
+        drawMap(currentMap);
+    }
+
+    private static String[][] chooseMap(int mapSize, String color){
+
+        String[][] currentMapTemp;
 
         String[][] map10 = new String[][]
         {
@@ -29,10 +38,10 @@ public class Gameboard {
                 {"BLANC", "GREEN", "GREEN",  "CYAN",   "CYAN",   "CYAN",   "CYAN","GREEN","GREEN","BLANC"},
                 {"BLANC", "BLANC", "BLANC",  "CYAN",   "CYAN",   "CYAN",   "CYAN","BLANC","BLANC","BLANC"}
         };
+        currentMapTemp = map10;
 
-        // if custom color is chosen, change map accordingly
         if (color.equals("green")){
-            map10 = new String[][]
+            String[][] map10green = new String[][]
             {
                     {"BLANC", "BLANC", "BLANC", "GREEN", "GREEN", "GREEN", "GREEN", "BLANC", "BLANC", "BLANC"},
                     {"BLANC", "GREEN",  "GREEN",  "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "BLANC"},
@@ -45,21 +54,19 @@ public class Gameboard {
                     {"BLANC", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN","GREEN","GREEN","BLANC"},
                     {"BLANC", "BLANC", "BLANC", "GREEN", "GREEN", "GREEN", "GREEN","BLANC","BLANC","BLANC"}
             };
+            currentMapTemp = map10green;
         }
 
+        return currentMapTemp;
+    }
 
-        //default map
-        String [][] map = map10;
-
-        // rows of map
+    private static void drawMap(String[][] map){
         for (String[] strings : map) {
-            // columns of map
             for (String string : strings) {
                 printSingleColorBlock(string);
             }
-            IO.println(); // Neue Zeile nach jeder Kartenreihe
+            IO.println();
         }
-
         IO.println();
     }
 
@@ -88,7 +95,17 @@ public class Gameboard {
     }
 
     private static void printSingleColorBlockAtCoordinates(String colorName, int x, int y){
+        // Validierung der Koordinaten
+        if (x < 0 || x >= 10 || y < 0 || y >= 10 || currentMap == null) {
+            IO.println("Ungültige Koordinaten oder Map nicht geladen!");
+            return;
+        }
 
+        // Farbe an Koordinaten ändern
+        currentMap[y][x] = colorName;
+
+        // Map neu zeichnen
+        drawMap(currentMap);
     }
 
 }
