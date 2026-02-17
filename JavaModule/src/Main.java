@@ -10,7 +10,6 @@ void main() {
 
     //Planet name
     String chosenPlanetName = ActionMenu.readPlanetName();
-
     //Difficulty
     int chosenDifficultyInt = ActionMenu.readDifficulty();
 
