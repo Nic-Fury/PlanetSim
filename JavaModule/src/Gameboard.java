@@ -47,6 +47,7 @@ public class Gameboard {
             };
         }
 
+
         //default map
         String [][] map = map10;
 
@@ -58,6 +59,8 @@ public class Gameboard {
             }
             IO.println(); // Neue Zeile nach jeder Kartenreihe
         }
+
+        IO.println();
     }
 
     private static void printSingleColorBlock(String colorName){
@@ -82,6 +85,10 @@ public class Gameboard {
         String ANSI_RESET = "\u001b[0m";
 
         IO.print(bg + "   " + ANSI_RESET);
+    }
+
+    private static void printSingleColorBlockAtCoordinates(String colorName, int x, int y){
+
     }
 
 }
