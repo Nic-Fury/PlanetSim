@@ -1,0 +1,6 @@
+# Build-Ordner von IntelliJ
+out/
+
+# IntelliJ-spezifische Einstellungen
+.idea/
+*.iml

@@ -53,12 +53,10 @@ public class ActionMenu {
         return chosenDifficultyInt;
     }
 
-
     public static void printActionMenu(){
         printResources();
         printActions();
     }
-
 
     public static void printResources(){
         IO.println("+-------------------------------------+");
@@ -71,12 +69,14 @@ public class ActionMenu {
         IO.println("|         Waehle eine Aktion:         |");
         IO.println("| 1. Build                            |");
         IO.println("| 2. Do nothing                       |");
+        IO.println("| 3. Exit                             |");
         IO.println("+-------------------------------------+");
         while (true) {
-            String input = IO.readln("Auswahl: (1-2) ");
+            String input = IO.readln("Auswahl: (1-3) ");
             int userinput;
             try {
                 userinput = Integer.parseInt(input.trim());
+                ActionHandler.executeAction(userinput);
                 break;
             } catch (NumberFormatException e) {
                 IO.println("Invalid Input: Please enter an INTEGER. (1-2)");
