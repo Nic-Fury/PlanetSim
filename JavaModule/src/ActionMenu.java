@@ -41,7 +41,7 @@ public class ActionMenu {
         IO.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
         int chosenDifficultyInt;
         while (true) {
-            String input = IO.readln("Choose your Difficulty: ");
+            String input = IO.readln("Choose your Difficulty: (1-3) ");
             try {
                 chosenDifficultyInt = Integer.parseInt(input.trim());
                 break;

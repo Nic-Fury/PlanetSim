@@ -18,7 +18,7 @@ void main() {
     while (true) {
 
         ActionMenu.printActionMenu();
-        Gameboard.printPlanet(chosenDifficultyInt);
+        Gameboard.printPlanet(chosenDifficultyInt, "green");
 
         break; // Remove this break to enable infinite loop
     }
