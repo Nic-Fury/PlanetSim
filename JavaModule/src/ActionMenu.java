@@ -35,22 +35,22 @@ public class ActionMenu {
         }
     }
 
-    public static int readDifficulty() {
+    public static int readMapSize() {
         IO.println("+++++++++++++++++++++++++++++++++++++++");
-        int chosenDifficultyInt;
+        int chosenMapSizeInt;
         while (true) {
-            String input = IO.readln("Choose your Difficulty: (1-3) ");
+            String input = IO.readln("Choose your MapSize: (1-3) ");
             try {
-                chosenDifficultyInt = Integer.parseInt(input.trim());
+                chosenMapSizeInt = Integer.parseInt(input.trim());
                 break;
             } catch (NumberFormatException e) {
                 IO.println("Invalid Input: Please enter an INTEGER.");
             }
         }
-        IO.println("Difficulty: " + chosenDifficultyInt);
+        IO.println("Difficulty: " + chosenMapSizeInt);
         IO.println("+++++++++++++++++++++++++++++++++++++++");
         IO.println();
-        return chosenDifficultyInt;
+        return chosenMapSizeInt;
     }
 
     public static void printActionMenu(int roundCounterInt){

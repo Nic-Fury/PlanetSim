@@ -3,15 +3,15 @@
 void main() {
 
     int roundCounterInt = 1;
-    int chosenDifficultyInt = 0;
+    int chosenMapSizeInt = 0;
 
     while (true) {
 
         // first round: welcome message, planet name and difficulty selection, round
         if (roundCounterInt == 1) {
-            Round.startFirstRound(chosenDifficultyInt, roundCounterInt);
+            Round.startFirstRound(chosenMapSizeInt, roundCounterInt);
         } else if (roundCounterInt > 1) {
-            Round.startRound(chosenDifficultyInt, roundCounterInt);
+            Round.startRound(chosenMapSizeInt, roundCounterInt);
         }
 
         roundCounterInt++;
