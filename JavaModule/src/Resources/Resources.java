@@ -29,12 +29,7 @@ public abstract class Resources {
         this.amount += amountToAdd;
     }
 
-    // Methode to deduct resources
-    public void deductResources(int amountToDeduct) {
-        if (amountToDeduct > this.amount) {
-            throw new IllegalArgumentException("Not enough resources to deduct.");
-        }
-        this.amount -= amountToDeduct;
+    public void subResources(int amountToSub) {
+        this.amount -= amountToSub;
     }
-
 }

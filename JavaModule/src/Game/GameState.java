@@ -1,7 +1,6 @@
-package Game;
-
 import Resources.GoldResources;
 import Resources.WoodResources;
+import Buildings.Buildings;
 
 /**********************************************************************
  *           Diese Klasse ist dazu da, um den Spielzustand
@@ -23,11 +22,6 @@ public class GameState {
     public static void setCurrentMap(String[][] map) { currentMap = map; }
     public static boolean hasMap() { return currentMap != null; }
 
-//    public static void deductGold(int amount) {
-//        myGold.setAmount(myGold.getAmount() - amount);
-//    }
-//
-//    public static void deductWood(int amount) {
-//        myWood.setAmount(myWood.getAmount() - amount);
-//    }
+    public static boolean kannBauen(Buildings b) {return myGold.getAmount() >= b.goldKosten && myWood.getAmount() >= b.holzKosten; }
+    public static void ressourcenAbziehen(Buildings b) {myGold.subResources(b.goldKosten);myWood.subResources(b.holzKosten); }
 }
