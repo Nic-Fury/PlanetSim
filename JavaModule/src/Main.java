@@ -9,7 +9,7 @@ void main() {
 
         // first round: welcome message, planet name and difficulty selection, round
         if (roundCounterInt == 1) {
-            Round.startFirstRound(chosenMapSizeInt, roundCounterInt);
+            chosenMapSizeInt = Round.startFirstRound(roundCounterInt);
         } else if (roundCounterInt > 1) {
             Round.startRound(chosenMapSizeInt, roundCounterInt);
         }

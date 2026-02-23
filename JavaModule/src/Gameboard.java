@@ -14,11 +14,11 @@
 
 public class Gameboard {
 
-    private static String[][] currentMap;
-
     public static void printPlanet(int mapSize){
-        currentMap = chooseMap(mapSize);
-        drawMap(currentMap);
+        if (!GameState.hasMap()) {
+            GameState.setCurrentMap(chooseMap(mapSize));
+        }
+        drawMap(GameState.getCurrentMap());
     }
 
     private static String[][] chooseMap(int mapSize){
@@ -65,6 +65,7 @@ public class Gameboard {
                 {"BLANC", "BLANC", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "BLANC", "BLANC"},
                 {"BLANC", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "BLANC"},
                 {"BLANC", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "BLANC"},
+                {"GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN"},
                 {"GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN"},
                 {"GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN"},
                 {"GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN"},
@@ -142,17 +143,14 @@ public class Gameboard {
     }
 
     public static void printSingleColorBlockAtCoordinates(String colorName, int x, int y){
-        // Validierung der Koordinaten (angepasst für dynamische Größe basierend auf currentMap)
+        String[][] currentMap = GameState.getCurrentMap();
         if (currentMap == null || y < 0 || y >= currentMap.length || x < 0 || x >= currentMap[y].length) {
             IO.println("Ungültige Koordinaten oder Map nicht geladen!");
             return;
         }
 
-        // Farbe an Koordinaten ändern
         currentMap[y][x] = colorName;
-
-        // Map neu zeichnen
+        GameState.setCurrentMap(currentMap);
         drawMap(currentMap);
     }
-
 }

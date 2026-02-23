@@ -1,7 +1,7 @@
 public class Round {
 
 
-    public static void startFirstRound(int chosenMapSizeInt,  int roundCounterInt){
+    public static int startFirstRound(int roundCounterInt){
         //Welcome message
         IO.println();
         IO.println();
@@ -10,11 +10,11 @@ public class Round {
 
         //Planet name
         String chosenPlanetName = ActionMenu.readPlanetName();
-        //Difficulty
-        chosenMapSizeInt = ActionMenu.readMapSize();
+        int chosenMapSizeInt = ActionMenu.readMapSize();
 
 
         startRound(chosenMapSizeInt, roundCounterInt);
+        return chosenMapSizeInt;
     }
 
     public static void startRound(int chosenMapSizeInt, int roundCounterInt){
