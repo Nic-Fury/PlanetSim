@@ -1,3 +1,5 @@
+package Game;
+
 import Buildings.NormalHouse;
 
 public class ActionHandler {

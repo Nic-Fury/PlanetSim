@@ -1,3 +1,5 @@
+package Game;
+
 import Resources.GoldResources;
 import Resources.WoodResources;
 import Buildings.Buildings;
