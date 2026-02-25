@@ -1,6 +1,7 @@
 package Game;
 
 import Buildings.NormalHouse;
+import Buildings.FarmLand;
 
 public class ActionHandler {
 
@@ -36,7 +37,10 @@ public class ActionHandler {
         ActionMenu.printResources();
 
         NormalHouse haus = new NormalHouse();
-        haus.printInfo();
+        FarmLand farm = new FarmLand();
+
+        IO.println("| [1] " + haus.displayName + " | Gold: " + haus.goldKosten + " | Holz: " + haus.holzKosten + "  |");
+        IO.println("| [2] " + farm.displayName + " | Gold: " + farm.goldKosten + " | Holz: " + farm.holzKosten + "  |");
         IO.println("| [0] Abbrechen                       |");
         IO.println("+-------------------------------------+");
 
@@ -44,6 +48,7 @@ public class ActionHandler {
 
         switch (input.trim()) {
             case "1" -> bauenStarten(haus);
+            case "2" -> bauenStarten(farm);
             case "0" -> IO.println("Bauen abgebrochen.");
             default  -> IO.println("Ungültige Eingabe.");
         }
