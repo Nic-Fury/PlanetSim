@@ -2,6 +2,7 @@ package Game;
 
 import Buildings.NormalHouse;
 import Buildings.FarmLand;
+import Buildings.Lumberjack;
 
 public class ActionHandler {
 
@@ -38,9 +39,11 @@ public class ActionHandler {
 
         NormalHouse haus = new NormalHouse();
         FarmLand farm = new FarmLand();
+        Lumberjack lumberjack = new Lumberjack();
 
         IO.println("| [1] " + haus.displayName + " | Gold: " + haus.goldKosten + " | Holz: " + haus.holzKosten + "  |");
         IO.println("| [2] " + farm.displayName + " | Gold: " + farm.goldKosten + " | Holz: " + farm.holzKosten + "  |");
+        IO.println("| [3] " + lumberjack.displayName + " | Gold: " + lumberjack.goldKosten + " | Holz: " + lumberjack.holzKosten + "  |");
         IO.println("| [0] Abbrechen                       |");
         IO.println("+-------------------------------------+");
 
@@ -49,6 +52,7 @@ public class ActionHandler {
         switch (input.trim()) {
             case "1" -> bauenStarten(haus);
             case "2" -> bauenStarten(farm);
+            case "3" -> bauenStarten(lumberjack);
             case "0" -> IO.println("Bauen abgebrochen.");
             default  -> IO.println("Ungültige Eingabe.");
         }
@@ -87,6 +91,12 @@ public class ActionHandler {
 
         GameState.ressourcenAbziehen(building);
         Gameboard.printSingleColorBlockAtCoordinates(building.color, x, y);
+        Gameboard.printSingleColorBlockAtCoordinates(building.color, x, y);
+
+        if (building instanceof Lumberjack) {
+            GameState.holzfaellerHinzufuegen();
+        }
+
         IO.println(building.displayName + " erfolgreich gebaut bei (" + x + ", " + y + ")!");
         ActionMenu.printResources();
     }

@@ -26,4 +26,9 @@ public class GameState {
 
     public static boolean kannBauen(Buildings b) {return myGold.getAmount() >= b.goldKosten && myWood.getAmount() >= b.holzKosten; }
     public static void ressourcenAbziehen(Buildings b) {myGold.subResources(b.goldKosten);myWood.subResources(b.holzKosten); }
+
+    private static int anzahlHolzfaeller = 0;
+    public static void holzfaellerHinzufuegen() { anzahlHolzfaeller++; }
+    public static int getAnzahlHolzfaeller() { return anzahlHolzfaeller; }
+    public static void addWood(int menge) { myWood.addResources(menge); }
 }

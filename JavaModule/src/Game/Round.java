@@ -1,5 +1,7 @@
 package Game;
 
+import Buildings.Lumberjack;
+
 public class Round {
 
 
@@ -20,8 +22,16 @@ public class Round {
     }
 
     public static void startRound(int chosenMapSizeInt, int roundCounterInt){
+        int holzBonus = GameState.getAnzahlHolzfaeller() * Lumberjack.HOLZ_PRO_RUNDE;
+        if (holzBonus > 0) {
+            GameState.addWood(holzBonus);
+            // IO.println("Holzfäller produzieren " + holzBonus + " Holz!");
+        }
+
+
         Gameboard.printPlanet(chosenMapSizeInt);
         ActionMenu.printActionMenu(roundCounterInt);
+
     }
 
 }
