@@ -5,5 +5,4 @@ public class WoodResources extends Resources {
         super("Wood", 10);
     }
 
-    public void addResources(int menge) { amount += menge; }
 }
