@@ -1,5 +1,6 @@
 package Game;
 
+import Buildings.FarmLand;
 import Buildings.Lumberjack;
 
 public class Round {
@@ -22,10 +23,17 @@ public class Round {
     }
 
     public static void startRound(int chosenMapSizeInt, int roundCounterInt){
+
+        ///   ToDO Das Zeug in eine Methode auslagern ------------------------------------------------------------------------------------------------------------------------------------
         int holzBonus = GameState.getAnzahlHolzfaeller() * Lumberjack.HOLZ_PRO_RUNDE;
         if (holzBonus > 0) {
             GameState.addWood(holzBonus);
             // IO.println("Holzfäller produzieren " + holzBonus + " Holz!");
+        }
+        int weedBonus = GameState.getAnzahlFarmLand() * FarmLand.WEED_PRO_RUNDE;
+        if (weedBonus > 0) {
+            GameState.addWeed(weedBonus);
+            IO.println("FarmLand produzieren " + weedBonus + " Weed!");
         }
 
 

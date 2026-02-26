@@ -70,9 +70,9 @@ public class ActionMenu {
 
     public static void printActions(int roundCounterInt){
         IO.println("|             Choose one option:              |");
-        IO.println("| 1. Build                                    |");
-        IO.println("| 2. Do nothing                               |");
-        IO.println("| 3. Exit                                     |");
+        IO.println("| [1] Build                                   |");
+        IO.println("| [2] Do nothing                              |");
+        IO.println("| [3] Exit                                    |");
         IO.println("+---------------------------------------------+");
         while (true) {
             String input = IO.readln("Enter your choice for round "+roundCounterInt+" : (1-3) ");

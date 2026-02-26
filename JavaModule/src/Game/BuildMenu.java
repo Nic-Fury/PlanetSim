@@ -1,9 +1,5 @@
 package Game;
 
-import Buildings.FarmLand;
-import Buildings.Lumberjack;
-import Buildings.NormalHouse;
-
 /**********************************************************************
  *           Diese Klasse ist dazu da, um das Bau Menü
  *           dazustellen und zu verwalten
@@ -27,76 +23,28 @@ import Buildings.NormalHouse;
 public class BuildMenu {
 
 
-    protected static void executeBuildMenu() {
+    protected static void drawBuildMenu() {
         IO.println();
-        IO.println("+#####################################+");
-        IO.println("|         Baumenü                     |");
-        IO.println("+#####################################+");
+        IO.println("###############################################");
+        IO.println("#~~~~~~~~~~~~~~~~~~BuildMenu~~~~~~~~~~~~~~~~~~#");
+        IO.println("###############################################");
         ActionMenu.printResources();
 
-        NormalHouse haus = new NormalHouse();
-        FarmLand farm = new FarmLand();
-        Lumberjack lumberjack = new Lumberjack();
 
-        IO.println("| [1] " + haus.displayName + "       | Gold: " + haus.goldKosten + " | Holz: " + haus.holzKosten + "  |");
-        IO.println("| [2] " + farm.displayName + "   | Gold: " + farm.goldKosten + " | Holz: " + farm.holzKosten + "  |");
-        IO.println("| [3] " + lumberjack.displayName + " | Gold: " + lumberjack.goldKosten + " | Holz: " + lumberjack.holzKosten + "  |");
-        IO.println("| [0] Abbrechen                       |");
-        IO.println("+-------------------------------------+");
+        IO.println("| [1] " + BuildHandler.haus.displayName       + "| Gold: " + BuildHandler.haus.goldKosten       + " | Wood: " + BuildHandler.haus.holzKosten       + "         |");
+        IO.println("| [2] " + BuildHandler.farm.displayName       + "| Gold: " + BuildHandler.farm.goldKosten       + " | Wood: " + BuildHandler.farm.holzKosten       + "         |");
+        IO.println("| [3] " + BuildHandler.lumberjack.displayName + "| Gold: " + BuildHandler.lumberjack.goldKosten + " | Wood: " + BuildHandler.lumberjack.holzKosten + "         |");
+        IO.println("| [0] Cancel                                  |");
+        IO.println("+---------------------------------------------+");
 
-        String input = IO.readln("Wähle ein Gebäude: ");
+        String buildChoice = IO.readln("Choose a building: ");
+        int buildChoiceValid = Integer.parseInt(buildChoice);
 
-        switch (input.trim()) {
-            case "1" -> bauenStarten(haus);
-            case "2" -> bauenStarten(farm);
-            case "3" -> bauenStarten(lumberjack);
-            case "0" -> IO.println("Bauen abgebrochen.");
-            default  -> IO.println("Ungültige Eingabe.");
-        }
-    }
+        BuildHandler.executeBuildingAction(buildChoiceValid);
 
-    private static void bauenStarten(Buildings.Buildings building) {
-        if (!GameState.kannBauen(building)) {
-            IO.println("Nicht genug Ressourcen für " + building.displayName + "!");
-            return;
         }
 
-        String[][] map = GameState.getCurrentMap();
-        int maxX = map[0].length - 1;
-        int maxY = map.length - 1;
 
-        IO.println("Koordinaten eingeben (X: 0-" + maxX + ", Y: 0-" + maxY + ")");
-
-        int x, y;
-        try {
-            x = Integer.parseInt(IO.readln("X-Koordinate: ").trim());
-            y = Integer.parseInt(IO.readln("Y-Koordinate: ").trim());
-        } catch (NumberFormatException e) {
-            IO.println("Ungültige Koordinaten.");
-            return;
-        }
-
-        if (y < 0 || y >= map.length || x < 0 || x >= map[y].length) {
-            IO.println("Koordinaten außerhalb der Karte!");
-            return;
-        }
-
-        if (map[y][x].equals("BLANC")) {
-            IO.println("Auf diesem Feld kannst du nicht bauen!");
-            return;
-        }
-
-        GameState.ressourcenAbziehen(building);
-        Gameboard.printSingleColorBlockAtCoordinates(building.color, x, y);
-        Gameboard.printSingleColorBlockAtCoordinates(building.color, x, y);
-
-        if (building instanceof Lumberjack) {
-            GameState.holzfaellerHinzufuegen();
-        }
-
-        IO.println(building.displayName + " erfolgreich gebaut bei (" + x + ", " + y + ")!");
-        ActionMenu.printResources();
-    }
 
 
 }

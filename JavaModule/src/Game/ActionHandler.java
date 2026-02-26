@@ -1,9 +1,5 @@
 package Game;
 
-import Buildings.NormalHouse;
-import Buildings.FarmLand;
-import Buildings.Lumberjack;
-
 public class ActionHandler {
 
 
@@ -12,7 +8,7 @@ public class ActionHandler {
                 case 1:
                     //System.out.println("You chose to build.");
                     // Call method to gather resources
-                    BuildMenu.executeBuildMenu();
+                    BuildMenu.drawBuildMenu();
                     break;
                 case 2:
                     System.out.println("You chose to do nothing.");

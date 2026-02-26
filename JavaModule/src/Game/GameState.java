@@ -38,4 +38,9 @@ public class GameState {
     public static void holzfaellerHinzufuegen() { anzahlHolzfaeller++; }
     public static int getAnzahlHolzfaeller() { return anzahlHolzfaeller; }
     public static void addWood(int menge) { myWood.addResources(menge); }
+
+    private static int anzahlFarmLand = 0;
+    public static void farmLandHinzufuegen() { anzahlFarmLand++; }
+    public static int getAnzahlFarmLand() { return anzahlFarmLand; }
+    public static void addWeed(int menge) { myWeed.addResources(menge);}
 }
