@@ -43,4 +43,18 @@ public class GameState {
     public static void farmLandHinzufuegen() { anzahlFarmLand++; }
     public static int getAnzahlFarmLand() { return anzahlFarmLand; }
     public static void addWeed(int menge) { myWeed.addResources(menge);}
+
+    public static boolean isCellOccupied(int x, int y) {
+        if (currentMap == null || y < 0 || y >= currentMap.length || x < 0 || x >= currentMap[y].length) {
+            return false;
+        }
+        return currentMap[y][x].equals("BUILDING");
+    }
+
+    public static void markCellAsOccupied(int x, int y) {
+        if (currentMap != null && y >= 0 && y < currentMap.length && x >= 0 && x < currentMap[y].length) {
+            currentMap[y][x] = "BUILDING";
+        }
+    }
+
 }

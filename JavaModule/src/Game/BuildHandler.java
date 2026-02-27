@@ -52,6 +52,11 @@ public class BuildHandler {
             return;
         }
 
+        if (GameState.isCellOccupied(x, y)) {
+            IO.println("Hier steht bereits ein Gebäude!");
+            return;
+        }
+
         GameState.ressourcenAbziehen(building);
         Gameboard.printSingleColorBlockAtCoordinates(building.color, x, y);
         Gameboard.printSingleColorBlockAtCoordinates(building.color, x, y);
@@ -63,6 +68,8 @@ public class BuildHandler {
         if (building instanceof FarmLand) {
             GameState.farmLandHinzufuegen();
         }
+
+        GameState.markCellAsOccupied(x, y);
 
         IO.println(building.displayName + " erfolgreich gebaut bei (" + x + ", " + y + ")!");
         ActionMenu.printResources();
