@@ -44,6 +44,11 @@ public class GameState {
     public static int getAnzahlFarmLand() { return anzahlFarmLand; }
     public static void addWeed(int menge) { myWeed.addResources(menge);}
 
+    private static int anzahlBakery = 0;
+    public static void bakeryHinzufuegen() { anzahlBakery++; }
+    public static int getAnzahlBakery() { return anzahlBakery; }
+    public static void addBread(int menge) { myBread.addResources(menge);}
+
     public static boolean isCellOccupied(int x, int y) {
         if (currentMap == null || y < 0 || y >= currentMap.length || x < 0 || x >= currentMap[y].length) {
             return false;

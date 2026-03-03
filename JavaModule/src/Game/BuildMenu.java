@@ -34,6 +34,7 @@ public class BuildMenu {
         IO.println("| [1] " + BuildHandler.haus.displayName       + "| Gold: " + BuildHandler.haus.goldKosten       + " | Wood: " + BuildHandler.haus.holzKosten       + "         |");
         IO.println("| [2] " + BuildHandler.farm.displayName       + "| Gold: " + BuildHandler.farm.goldKosten       + " | Wood: " + BuildHandler.farm.holzKosten       + "         |");
         IO.println("| [3] " + BuildHandler.lumberjack.displayName + "| Gold: " + BuildHandler.lumberjack.goldKosten + " | Wood: " + BuildHandler.lumberjack.holzKosten + "         |");
+        IO.println("| [4] " + BuildHandler.bakery.displayName + "| Gold: " + BuildHandler.bakery.goldKosten + " | Wood: " + BuildHandler.bakery.holzKosten + "         |");
         IO.println("| [0] Cancel                                  |");
         IO.println("+---------------------------------------------+");
 

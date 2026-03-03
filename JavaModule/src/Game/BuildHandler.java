@@ -1,5 +1,6 @@
 package Game;
 
+import Buildings.Bakery;
 import Buildings.FarmLand;
 import Buildings.Lumberjack;
 import Buildings.NormalHouse;
@@ -9,12 +10,14 @@ public class BuildHandler {
     protected static final NormalHouse haus       = new NormalHouse();
     protected static final FarmLand    farm        = new FarmLand();
     protected static final Lumberjack  lumberjack  = new Lumberjack();
+    protected static final Bakery      bakery       = new Bakery();
 
     protected static void executeBuildingAction(int buildchoice) {
         switch (buildchoice) {
             case 1 -> bauenStarten(haus);
             case 2 -> bauenStarten(farm);
             case 3 -> bauenStarten(lumberjack);
+            case 4 -> bauenStarten(bakery);
             case 0 -> IO.println("Bauen abgebrochen.");
             default -> IO.println("Ungültige Eingabe.");
         }
@@ -67,6 +70,10 @@ public class BuildHandler {
 
         if (building instanceof FarmLand) {
             GameState.farmLandHinzufuegen();
+        }
+
+        if (building instanceof Bakery) {
+            GameState.bakeryHinzufuegen();
         }
 
         GameState.markCellAsOccupied(x, y);
