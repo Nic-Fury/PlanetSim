@@ -3,7 +3,10 @@ package Game;
 import Buildings.Bakery;
 import Buildings.FarmLand;
 import Buildings.Lumberjack;
+import Buildings.TreeFarm;
 import Buildings.NormalHouse;
+import Buildings.Stonemason;
+import Buildings.Quarry;
 
 public class BuildHandler {
 
@@ -11,13 +14,20 @@ public class BuildHandler {
     protected static final FarmLand    farm        = new FarmLand();
     protected static final Lumberjack  lumberjack  = new Lumberjack();
     protected static final Bakery      bakery      = new Bakery();
+    protected static final Stonemason    stonemason = new Stonemason();
+    protected static final Quarry        quarry        = new Quarry();
+    protected static final TreeFarm    treeFarm    = new TreeFarm();
 
     protected static void executeBuildingAction(int buildchoice) {
         switch (buildchoice) {
             case 1 -> bauenStarten(haus);
             case 2 -> bauenStarten(farm);
-            case 3 -> bauenStarten(lumberjack);
-            case 4 -> bauenStarten(bakery);
+            case 3 -> bauenStarten(bakery);
+            case 4 -> bauenStarten(lumberjack);
+            case 5 -> bauenStarten(treeFarm);
+            case 6 -> bauenStarten(stonemason);
+            case 7 -> bauenStarten(quarry);
+
             case 0 -> IO.println("Bauen abgebrochen.");
             default -> IO.println("Ungültige Eingabe.");
         }
