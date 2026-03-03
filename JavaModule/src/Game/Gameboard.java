@@ -123,9 +123,15 @@ public class Gameboard {
     private static void printSingleColorBlock(String colorName){
         //  Method uses ANSI escape codes for background colors
 
-
-        // Gibt es etwas besseres hier als einen switch case?
+        // Gibt es etwas besseres hier als einen switch case? Wahrscheinlich nicht, da es nur 8 Farben gibt.
         String name = colorName == null ? "" : colorName.trim().toUpperCase();
+
+        // Check if the colorName is a building code (enclosed in square brackets)
+        if (colorName != null && colorName.startsWith("[") && colorName.endsWith("]")) {
+            printBuildingBlock(colorName);
+            return;
+        }
+
         String bg = switch (name) {
             case "BLACK" -> "\u001b[40m";
             case "RED" -> "\u001b[41m";
@@ -140,8 +146,14 @@ public class Gameboard {
         };
 
         String ANSI_RESET = "\u001b[0m";
-
         IO.print(bg + "   " + ANSI_RESET);
+    }
+
+    private static void printBuildingBlock(String buildingCode) {
+        String ANSI_GREEN_BG = "\u001b[42m";
+        String ANSI_RESET    = "\u001b[0m";
+
+        java.lang.IO.print(ANSI_GREEN_BG + buildingCode + ANSI_RESET);
     }
 
     public static void printSingleColorBlockAtCoordinates(String colorName, int x, int y){
