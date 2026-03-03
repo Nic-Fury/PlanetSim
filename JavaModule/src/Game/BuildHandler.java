@@ -10,7 +10,7 @@ public class BuildHandler {
     protected static final NormalHouse haus       = new NormalHouse();
     protected static final FarmLand    farm        = new FarmLand();
     protected static final Lumberjack  lumberjack  = new Lumberjack();
-    protected static final Bakery      bakery       = new Bakery();
+    protected static final Bakery      bakery      = new Bakery();
 
     protected static void executeBuildingAction(int buildchoice) {
         switch (buildchoice) {
@@ -22,7 +22,6 @@ public class BuildHandler {
             default -> IO.println("Ungültige Eingabe.");
         }
     }
-
 
     protected static void bauenStarten(Buildings.Buildings building) {
         if (!GameState.kannBauen(building)) {
@@ -62,20 +61,7 @@ public class BuildHandler {
 
         GameState.ressourcenAbziehen(building);
         Gameboard.printSingleColorBlockAtCoordinates(building.color, x, y);
-        Gameboard.printSingleColorBlockAtCoordinates(building.color, x, y);
-
-        if (building instanceof Lumberjack) {
-            GameState.holzfaellerHinzufuegen();
-        }
-
-        if (building instanceof FarmLand) {
-            GameState.farmLandHinzufuegen();
-        }
-
-        if (building instanceof Bakery) {
-            GameState.bakeryHinzufuegen();
-        }
-
+        GameState.registerBuilding(building);   // generic – works for any building
         GameState.markCellAsOccupied(x, y);
 
         IO.println(building.displayName + " erfolgreich gebaut bei (" + x + ", " + y + ")!");

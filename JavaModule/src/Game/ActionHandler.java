@@ -21,6 +21,10 @@ public class ActionHandler {
                     System.out.println("You chose to end your turn.");
                     // Call method to end turn
                     break;
+                case 0:
+                    System.out.println("DEVELOPER MODE");
+                    executeDeveloperMode();
+                    break;
                 default:
                     System.out.println("Invalid input. Please choose a valid action.");
             }
@@ -39,5 +43,22 @@ public class ActionHandler {
         IO.println("Game Over! Thanks for playing.");
         IO.println("Your Score: " + GameState.getGoldInstance().getAmount() + " Gold, " + GameState.getWoodInstance().getAmount() + " Holz");
         System.exit(0);
+    }
+
+    public static void executeDeveloperMode(){
+        String developerChoice = IO.readln("Add 100 resources to ([G]old, [W]ood, [S]tone, [P]opulation, [We]ed, [B]read) \n" +
+                                                  "[exit] to leave developer mode \n").trim().toUpperCase();
+        switch (developerChoice) {
+            case "G"    -> GameState.getGoldInstance().addResources(100);
+            case "W"    -> GameState.getWoodInstance().addResources(100);
+            case "S"    -> GameState.getStoneInstance().addResources(100);
+            case "P"    -> GameState.getPopulationInstance().addResources(100);
+            case "WE"   -> GameState.getWeedInstance().addResources(100);
+            case "B"    -> GameState.getBreadInstance().addResources(100);
+            case "EXIT", "E" -> IO.println("Exiting developer mode.");
+            default     -> IO.println("Invalid input. Please enter a valid resource or 'exit'.");
+        }
+
+
     }
 }
