@@ -1,5 +1,19 @@
 package Buildings;
 
+import Resources.Resources;
+
+/**
+ * Base class for all buildings.
+ *
+ * Following the Information Expert principle, each building knows:
+ *  - its display name and map color
+ *  - its construction costs
+ *  - which resource it produces each round and how much  (getProducedResource / getProductionPerRound)
+ *  - which resource it consumes per produced unit and how much  (getConsumedResource / getConsumptionPerUnit)
+ *
+ * Adding a new building only requires creating a subclass – no other class
+ * needs to be changed for production or consumption logic.
+ */
 public abstract class Buildings {
     public final String displayName;
     public final String color;
@@ -11,6 +25,72 @@ public abstract class Buildings {
         this.color        = color;
         this.goldKosten   = goldKosten;
         this.holzKosten   = holzKosten;
+    }
+
+    // ------------------------------------------------------------------
+    // Production
+    // ------------------------------------------------------------------
+
+    /**
+     * Returns the resource instance this building produces each round,
+     * or {@code null} if the building produces nothing.
+     */
+    public abstract Resources getProducedResource();
+
+    /**
+     * Returns the amount of resource this building produces per round.
+     * Only relevant when {@link #getProducedResource()} is non-null.
+     */
+    public abstract int getProductionPerRound();
+
+    // ------------------------------------------------------------------
+    // Consumption
+    // ------------------------------------------------------------------
+
+    /**
+     * Returns the resource this building consumes per produced unit,
+     * or {@code null} if the building consumes nothing.
+     *
+     * Example: a Bakery consumes Weed to produce Bread.
+     */
+    public Resources getConsumedResource() { return null; }
+
+    /**
+     * Returns how many units of {@link #getConsumedResource()} are consumed
+     * for every single unit produced.
+     * Only relevant when {@link #getConsumedResource()} is non-null.
+     */
+    public int getConsumptionPerUnit() { return 0; }
+
+    // ------------------------------------------------------------------
+    // Round tick
+    // ------------------------------------------------------------------
+
+    /**
+     * Executes one round of production and consumption.
+     *
+     * If a consumed resource is defined, actual production is capped by
+     * how many units can be afforded:
+     *   affordableUnits = floor(availableConsumed / consumptionPerUnit)
+     *
+     * Returns the number of units actually produced (for logging in Round).
+     */
+    public int produceResources() {
+        Resources produced = getProducedResource();
+        if (produced == null || getProductionPerRound() <= 0) return 0;
+
+        int units = getProductionPerRound();
+
+        Resources consumed = getConsumedResource();
+        if (consumed != null && getConsumptionPerUnit() > 0) {
+            int affordable = consumed.affordableUnits(getConsumptionPerUnit());
+            units = Math.min(units, affordable);
+            if (units <= 0) return 0;
+            consumed.subResources(units * getConsumptionPerUnit());
+        }
+
+        produced.addResources(units);
+        return units;
     }
 
     public void printInfo() {

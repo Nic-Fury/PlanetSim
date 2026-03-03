@@ -1,11 +1,8 @@
 package Game;
 
-import Buildings.Bakery;
-import Buildings.FarmLand;
-import Buildings.Lumberjack;
+import Buildings.Buildings;
 
 public class Round {
-
 
     public static int startFirstRound(int roundCounterInt){
         //Welcome message
@@ -18,40 +15,44 @@ public class Round {
         String chosenPlanetName = ActionMenu.readPlanetName();
         int chosenMapSizeInt = ActionMenu.readMapSize();
 
-
         startRound(chosenMapSizeInt, roundCounterInt);
         return chosenMapSizeInt;
     }
 
     public static void startRound(int chosenMapSizeInt, int roundCounterInt){
-
         updateResources();
-
         Gameboard.printPlanet(chosenMapSizeInt);
         ActionMenu.printActionMenu(roundCounterInt);
-
     }
 
+    /**
+     * Delegates production to each placed building.
+     * Following the Information Expert principle, every building knows
+     * what it produces and consumes – this method just triggers them all generically.
+     * Adding a new building type requires zero changes here.
+     */
     private static void updateResources() {
-        //update wood
-        int holzBonus = GameState.getAnzahlHolzfaeller() * Lumberjack.HOLZ_PRO_RUNDE;
-        if (holzBonus > 0) {
-            GameState.addWood(holzBonus);
-            // IO.println("Holzfäller produzieren " + holzBonus + " Holz!");
-        }
+        for (Buildings building : GameState.getPlacedBuildings()) {
+            if (building.getProducedResource() == null || building.getProductionPerRound() <= 0) continue;
 
-        //update weed
-        int weedBonus = GameState.getAnzahlFarmLand() * FarmLand.WEED_PRO_RUNDE;
-        if (weedBonus > 0) {
-            GameState.addWeed(weedBonus);
-            IO.println("FarmLand produzieren " + weedBonus + " Weed!");
-        }
+            int produced = building.produceResources();
 
-        //update bread
-        int breadBonus = GameState.getAnzahlBakery() * Bakery.BREAD_PRO_RUNDE;
-        if (breadBonus > 0) {
-            GameState.addBread(breadBonus);
-            IO.println("FarmLand produzieren " + breadBonus + " Bread!");
+            if (produced > 0) {
+                String msg = building.displayName.trim() + " produced " + produced
+                        + " " + building.getProducedResource().getResourceTypeName();
+                if (building.getConsumedResource() != null && building.getConsumptionPerUnit() > 0) {
+                    msg += " (consumed " + (produced * building.getConsumptionPerUnit())
+                            + " " + building.getConsumedResource().getResourceTypeName() + ")";
+                }
+                IO.println(msg);
+            } else {
+                IO.println(building.displayName.trim() + " could not produce "
+                        + building.getProducedResource().getResourceTypeName()
+                        + " – not enough "
+                        + (building.getConsumedResource() != null
+                            ? building.getConsumedResource().getResourceTypeName()
+                            : "resources") + "!");
+            }
         }
     }
 
