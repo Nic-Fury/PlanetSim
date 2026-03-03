@@ -71,21 +71,18 @@ public class GameState {
     }
 
     // ---------------------------------------------------------------
-    // Cell-occupancy tracking
+    // Cell-occupancy tracking  (separate from the color stored in the map)
     // ---------------------------------------------------------------
+
+    /** Stores "x,y" strings for every cell that already has a building. */
+    private static final java.util.Set<String> occupiedCells = new java.util.HashSet<>();
+
     public static boolean isCellOccupied(int x, int y) {
-        if (currentMap == null || y < 0 || y >= currentMap.length
-                || x < 0 || x >= currentMap[y].length) {
-            return false;
-        }
-        return currentMap[y][x].equals("BUILDING");
+        return occupiedCells.contains(x + "," + y);
     }
 
     public static void markCellAsOccupied(int x, int y) {
-        if (currentMap != null && y >= 0 && y < currentMap.length
-                && x >= 0 && x < currentMap[y].length) {
-            currentMap[y][x] = "BUILDING";
-        }
+        occupiedCells.add(x + "," + y);
     }
 
 }
