@@ -26,11 +26,11 @@ public abstract class Resources {
 
     // Method to add/subtract resources
     public void addResources(int amountToAdd) {
-        this.amount += amountToAdd;
+        amount += amountToAdd;
     }
 
     public void subResources(int amountToSub) {
-        this.amount -= amountToSub;
+        amount -= amountToSub;
     }
 
     /**
@@ -38,20 +38,16 @@ public abstract class Resources {
      * The resource itself knows whether it is exhausted.
      */
     public boolean isEmpty() {
-        return this.amount <= 0;
+        return amount <= 0;
     }
 
     /**
-     * Returns how many full lots of {@code costPerUnit} can be afforded
-     * from the current stock.
-     *
-     * Example: weed.affordableUnits(2) with 5 Weed → 2
-     *
-     * The resource itself knows its own stock, so this query belongs here
-     * (Information Expert principle).
+     * Returns how many full units of {@code costPerUnit} can be afforded
+     * from the current stock. Example: affordableUnits(2) with 5 → 2.
+     * Information Expert: the resource knows its own stock.
      */
     public int affordableUnits(int costPerUnit) {
         if (costPerUnit <= 0) return Integer.MAX_VALUE;
-        return this.amount / costPerUnit;
+        return amount / costPerUnit;
     }
 }
