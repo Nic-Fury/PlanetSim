@@ -17,10 +17,15 @@ package Game;
 public class Gameboard {
 
     public static void printPlanet(int mapSize){
+
         if (!GameState.hasMap()) {
             GameState.setCurrentMap(chooseMap(mapSize));
         }
         drawMap(GameState.getCurrentMap());
+
+        drawXCoordinates(mapSize);
+
+        IO.println();
     }
 
     private static String[][] chooseMap(int mapSize){
@@ -93,7 +98,8 @@ public class Gameboard {
                 {"BLANC", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "BLANC"},
                 {"BLANC", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "BLANC"},
                 {"GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN"},
-                {"GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN"}, {"GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN"},
+                {"GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN"},
+                {"GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN"},
                 {"GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN"},
                 {"GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN"},
                 {"GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN", "GREEN"},
@@ -111,13 +117,13 @@ public class Gameboard {
     }
 
     private static void drawMap(String[][] map){
-        for (String[] strings : map) {
-            for (String string : strings) {
+        for (int row = 0; row < map.length; row++) {
+            for (String string : map[row]) {
                 printSingleColorBlock(string);
             }
+            drawYCoordinates(row);
             IO.println();
         }
-        IO.println();
     }
 
     private static void printSingleColorBlock(String colorName){
@@ -166,5 +172,29 @@ public class Gameboard {
         currentMap[y][x] = colorName;
         GameState.setCurrentMap(currentMap);
         drawMap(currentMap);
+    }
+
+    private static void drawXCoordinates(int mapSizeCode) {
+
+        int realMapSize = switch (mapSizeCode){
+            case 1 -> 10;
+            case 2 -> 15;
+            case 3 -> 20;
+            default -> 10;
+        };
+
+        IO.print("");
+        for (int i = 0; i < realMapSize * 3; i++) {
+            if (i % 3 == 1) {
+                IO.print(String.format("%02d",(i / 3)) + " ");
+            } else {
+                IO.print("");
+            }
+        }
+        IO.println();
+    }
+    private static void drawYCoordinates(int rowIndex) {
+        String ANSI_RESET = "\u001b[0m";
+        IO.print(ANSI_RESET + " " + String.format("%02d", rowIndex));
     }
 }
