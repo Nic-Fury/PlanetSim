@@ -15,4 +15,7 @@ public class Quarry extends IndustryBuildings {
 
     @Override
     public int getProductionPerRound() { return Stone_PRO_RUNDE; }
+
+    @Override
+    public int getWorkforceRequired() { return 3; }
 }

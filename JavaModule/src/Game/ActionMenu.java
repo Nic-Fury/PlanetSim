@@ -65,6 +65,7 @@ public class ActionMenu {
         // From the class GameState we get the resource instances and execute the getAmount() method
         IO.println("| Gold:       " + String.format("%03d",GameState.getGoldInstance().getAmount()) +      " |  Wood: " + String.format("%03d",GameState.getWoodInstance().getAmount()) + " |  Stone: "+ String.format("%03d",GameState.getStoneInstance().getAmount()) +"  |");
         IO.println("| Population: " + String.format("%03d",GameState.getPopulationInstance().getAmount()) +" |  Weed: " + String.format("%03d",GameState.getWeedInstance().getAmount()) + " |  Bread: "+ String.format("%03d",GameState.getBreadInstance().getAmount()) +"  |");
+        IO.println("| Workforce:  " + String.format("%03d", GameState.getWorkforceInstance().getAmount()) + " |  ????: " + "..." + "                |");
         IO.println("+---------------------------------------------+");
     }
 

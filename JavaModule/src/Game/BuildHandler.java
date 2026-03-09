@@ -39,6 +39,12 @@ public class BuildHandler {
             return;
         }
 
+        if (!GameState.hatGenugArbeitskraft(building)) {
+            IO.println("Nicht genug Arbeitskraft für " + building.displayName + "!");
+            IO.println("Verfügbar: " + (GameState.getPopulationInstance().getAmount() - GameState.getPlacedBuildings().stream().mapToInt(Buildings.Buildings::getWorkforceRequired).sum()) + " | Benötigt: " + building.getWorkforceRequired());
+            return;
+        }
+
         String[][] map = GameState.getCurrentMap();
         int maxX = map[0].length - 1;
         int maxY = map.length - 1;

@@ -22,4 +22,7 @@ public class Bakery extends IndustryBuildings {
 
     @Override
     public int getConsumptionPerUnit()      { return WEED_PRO_BREAD; }
+
+    @Override
+    public int getWorkforceRequired() { return 2; }
 }

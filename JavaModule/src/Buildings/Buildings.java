@@ -62,6 +62,19 @@ public abstract class Buildings {
      */
     public int getConsumptionPerUnit() { return 0; }
 
+    /**
+     * Returns the resource consumed per population unit generated.
+     * Override in ResidentialBuildings that require food.
+     */
+    public Resources getPopulationConsumedResource() { return null; }
+
+    /**
+     * Returns how many units of getPopulationConsumedResource() are consumed
+     * per population unit generated.
+     */
+    public int getPopulationConsumptionPerUnit() { return 0; }
+
+
     // ------------------------------------------------------------------
     // Round tick
     // ------------------------------------------------------------------
@@ -92,6 +105,19 @@ public abstract class Buildings {
         produced.addResources(units);
         return units;
     }
+
+    /**
+     * Returns the workforce this building requires to operate.
+     * Override in subclasses that need workforce (e.g. IndustryBuildings).
+     */
+    public int getWorkforceRequired() { return 0; }
+
+    /**
+     * Returns how much population this building generates per round.
+     * Override in ResidentialBuildings.
+     */
+    public int getPopulationPerRound() { return 0; }
+
 
     public void printInfo() {
         IO.println("| " + displayName

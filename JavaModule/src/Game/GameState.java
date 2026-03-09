@@ -21,6 +21,8 @@ public class GameState {
     private static final BreadResources      myBread      = new BreadResources();
     private static final StoneResources      myStone      = new StoneResources();
     private static final WeedResources       myWeed       = new WeedResources();
+    private static final WorkforceResources myWorkforce = new WorkforceResources();
+
 
     public static GoldResources       getGoldInstance()       { return myGold; }
     public static WoodResources       getWoodInstance()       { return myWood; }
@@ -28,6 +30,7 @@ public class GameState {
     public static BreadResources      getBreadInstance()      { return myBread; }
     public static StoneResources      getStoneInstance()      { return myStone; }
     public static WeedResources       getWeedInstance()       { return myWeed; }
+    public static WorkforceResources getWorkforceInstance() { return myWorkforce; }
 
     // ---------------------------------------------------------------
     // Map
@@ -85,4 +88,15 @@ public class GameState {
         occupiedCells.add(x + "," + y);
     }
 
+    public static boolean hatGenugArbeitskraft(Buildings b) {
+        if (b.getWorkforceRequired() <= 0) return true;
+        int verfuegbar = getPopulationInstance().getAmount() - getTotalWorkforceUsed();
+        return verfuegbar >= b.getWorkforceRequired();
+    }
+
+    private static int getTotalWorkforceUsed() {
+        return getPlacedBuildings().stream()
+                .mapToInt(Buildings::getWorkforceRequired)
+                .sum();
+    }
 }
