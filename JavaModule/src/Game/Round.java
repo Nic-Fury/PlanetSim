@@ -2,6 +2,7 @@ package Game;
 
 import Buildings.Buildings;
 import Resources.Resources;
+import Events.Events;
 
 public class Round {
 
@@ -9,7 +10,7 @@ public class Round {
         //Welcome message
         IO.println();
         IO.println();
-        IO.println(String.format("Welcome to Planet Sim!"));
+        IO.printSlowByChar(String.format("Welcome to Planet Sim!"));
         IO.println();
 
         //Planet name
@@ -24,6 +25,8 @@ public class Round {
         updateResources();
         Gameboard.printPlanet(chosenMapSizeInt);
         ActionMenu.printActionMenu(roundCounterInt);
+        Events.triggerPossibleEvent();
+        IO.println(GameState.getPlacedBuildings().toString());
     }
 
     /**

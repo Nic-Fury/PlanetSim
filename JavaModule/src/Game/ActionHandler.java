@@ -58,7 +58,9 @@ public class ActionHandler {
             case "EXIT", "E" -> IO.println("Exiting developer mode.");
             default     -> IO.println("Invalid input. Please enter a valid resource or 'exit'.");
         }
+    }
 
-
+    public static boolean isEven(int number) {
+        return number % 2 == 0;
     }
 }

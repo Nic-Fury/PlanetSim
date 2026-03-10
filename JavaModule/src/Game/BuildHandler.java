@@ -76,6 +76,8 @@ public class BuildHandler {
         }
 
         GameState.ressourcenAbziehen(building);
+        building.x = x;
+        building.y = y;
         Gameboard.printSingleColorBlockAtCoordinates(building.color, x, y);
         GameState.registerBuilding(building);   // generic – works for any building
         GameState.markCellAsOccupied(x, y);
