@@ -46,7 +46,7 @@ public class ActionHandler {
     }
 
     public static void executeDeveloperMode(){
-        String developerChoice = IO.readln("Add 100 resources to ([G]old, [W]ood, [S]tone, [P]opulation, [We]ed, [B]read) \n" +
+        String developerChoice = IO.readln("Add 100 resources to ([G]old, [W]ood, [S]tone, [P]opulation, [We]ed, [B]read), [Wo]rkforce \n" +
                                                   "[exit] to leave developer mode \n").trim().toUpperCase();
         switch (developerChoice) {
             case "G"    -> GameState.getGoldInstance().addResources(100);
@@ -55,6 +55,7 @@ public class ActionHandler {
             case "P"    -> GameState.getPopulationInstance().addResources(100);
             case "WE"   -> GameState.getWeedInstance().addResources(100);
             case "B"    -> GameState.getBreadInstance().addResources(100);
+            case "WO" -> GameState.getWorkforceInstance().addResources(100);
             case "EXIT", "E" -> IO.println("Exiting developer mode.");
             default     -> IO.println("Invalid input. Please enter a valid resource or 'exit'.");
         }
