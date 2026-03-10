@@ -1,5 +1,6 @@
 package Buildings;
 
+import Game.IO;
 import Resources.Resources;
 
 /**

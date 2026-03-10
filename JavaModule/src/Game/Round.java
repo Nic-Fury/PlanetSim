@@ -10,7 +10,7 @@ public class Round {
         //Welcome message
         IO.println();
         IO.println();
-        IO.println(String.format("Welcome to Planet Sim!"));
+        IO.printSlowByChar(String.format("Welcome to Planet Sim!"));
         IO.println();
 
         //Planet name

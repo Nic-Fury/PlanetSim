@@ -61,20 +61,20 @@ public class ActionMenu {
     }
 
     public static void printResources(){
-        IO.println("+---------------------------------------------+");
+        IO.printlnSlow(5,"+---------------------------------------------+");
         // From the class GameState we get the resource instances and execute the getAmount() method
-        IO.println("| Gold:       " + String.format("%03d",GameState.getGoldInstance().getAmount()) +      " |  Wood: " + String.format("%03d",GameState.getWoodInstance().getAmount()) + " |  Stone: "+ String.format("%03d",GameState.getStoneInstance().getAmount()) +"  |");
-        IO.println("| Population: " + String.format("%03d",GameState.getPopulationInstance().getAmount()) +" |  Weed: " + String.format("%03d",GameState.getWeedInstance().getAmount()) + " |  Bread: "+ String.format("%03d",GameState.getBreadInstance().getAmount()) +"  |");
-        IO.println("| Workforce:  " + String.format("%03d", GameState.getWorkforceInstance().getAmount()) + " |  ????: " + "..." + "                |");
-        IO.println("+---------------------------------------------+");
+        IO.printSlowByChar(5,"| Gold:       " + String.format("%03d",GameState.getGoldInstance().getAmount()) +      " |  Wood: " + String.format("%03d",GameState.getWoodInstance().getAmount()) + " |  Stone: "+ String.format("%03d",GameState.getStoneInstance().getAmount()) +"  |");
+        IO.printSlowByChar(5,"| Population: " + String.format("%03d",GameState.getPopulationInstance().getAmount()) +" |  Weed: " + String.format("%03d",GameState.getWeedInstance().getAmount()) + " |  Bread: "+ String.format("%03d",GameState.getBreadInstance().getAmount()) +"  |");
+        IO.printSlowByChar(5,"| Workforce:  " + String.format("%03d", GameState.getWorkforceInstance().getAmount()) + " |  ????: " + "..." + "                |");
+        IO.printlnSlow(5,"+---------------------------------------------+");
     }
 
     public static void printActions(int roundCounterInt){
-        IO.println("|             Choose one option:              |");
-        IO.println("| [1] Build                                   |");
-        IO.println("| [2] Do nothing                              |");
-        IO.println("| [3] Exit                                    |");
-        IO.println("+---------------------------------------------+");
+        IO.printSlowByChar(5,"|             Choose one option:              |");
+        IO.printSlowByChar(5,"| [1] Build                                   |");
+        IO.printSlowByChar(5,"| [2] Do nothing                              |");
+        IO.printSlowByChar(5,"| [3] Exit                                    |");
+        IO.printlnSlow(5,"+---------------------------------------------+");
         while (true) {
             String input = IO.readln("Enter your choice for round "+roundCounterInt+" : (1-3) ");
             int userinput;
