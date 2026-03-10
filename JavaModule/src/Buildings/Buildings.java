@@ -124,4 +124,6 @@ public abstract class Buildings {
                 + " | Gold: " + goldKosten
                 + " | Holz: " + holzKosten + "  |");
     }
+
+
 }

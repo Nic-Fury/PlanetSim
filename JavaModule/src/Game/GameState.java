@@ -99,4 +99,5 @@ public class GameState {
                 .mapToInt(Buildings::getWorkforceRequired)
                 .sum();
     }
+
 }

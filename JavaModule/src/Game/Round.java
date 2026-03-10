@@ -2,6 +2,7 @@ package Game;
 
 import Buildings.Buildings;
 import Resources.Resources;
+import Events.StormEvent;
 
 public class Round {
 
@@ -24,6 +25,7 @@ public class Round {
         updateResources();
         Gameboard.printPlanet(chosenMapSizeInt);
         ActionMenu.printActionMenu(roundCounterInt);
+        new StormEvent().triggerPossibleEvent();
     }
 
     /**
