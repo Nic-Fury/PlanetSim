@@ -21,6 +21,10 @@ public abstract class Buildings {
     public final int goldKosten;
     public final int holzKosten;
 
+    /** Map coordinates – set by BuildHandler after placement. */
+    public int x = -1;
+    public int y = -1;
+
     public Buildings(String displayName, String color, int goldKosten, int holzKosten) {
         this.displayName  = displayName;
         this.color        = color;

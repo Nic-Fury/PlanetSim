@@ -50,4 +50,18 @@ public abstract class Resources {
         if (costPerUnit <= 0) return Integer.MAX_VALUE;
         return amount / costPerUnit;
     }
+
+    /**
+     * Reduces the current amount by the given percentage (0-100).
+     * The reduction is rounded down. The amount will never go below 0.
+     * Example: reduceByPercent(25) with amount=100 → amount becomes 75.
+     *
+     * @param percent value between 0 and 100
+     * @return the amount that was actually subtracted
+     */
+    public int reduceByPercent(int percent) {
+        int reduction = (int) (amount * (percent / 100.0));
+        amount = Math.max(0, amount - reduction);
+        return reduction;
+    }
 }

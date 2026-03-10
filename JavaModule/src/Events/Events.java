@@ -19,23 +19,30 @@ public abstract class Events {
 
     public abstract void applyEvent();
 
-    public void triggerPossibleEvent() {
-        int randomEventProbability = (int) (Math.random() * 100);
+    /**
+     * Randomly selects and triggers an event.
+     * Static so it can be called without an instance: Events.triggerPossibleEvent()
+     *
+     * Event probabilities:
+     *  0-29  : StormEvent        (30%)
+     *  30-59 : PerfectYieldEvent (30%)
+     *  60-99 : Nothing           (40%)
+     */
+    public static void triggerPossibleEvent() {
+        int roll = (int) (Math.random() * 100);
 
-//        IO.println("DEVELOPER randomEventProbability" + randomEventProbability);
-
-        /*****************************************************************
-         * Event probabilities:
-         * 0-29: Storm Event (30% chance)
-         * 30-99: Nothing happens (70% chance)
-         *****************************************************************/
-
-        if (randomEventProbability < 30) {
-            printEventIntro();
-            new StormEvent().applyEvent();
-            printEventOutro();
+        Events event = null;
+        if (roll < 30) {
+            event = new StormEvent();
+        } else if (roll < 60) {
+            event = new PerfectYieldEvent();
         }
 
+        if (event != null) {
+            event.printEventIntro();
+            event.applyEvent();
+            event.printEventOutro();
+        }
     }
 
     public void printEventIntro() {

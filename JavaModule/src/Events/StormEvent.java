@@ -1,5 +1,7 @@
 package Events;
 
+import Buildings.FarmLand;
+import Game.GameState;
 import Game.IO;
 
 public class StormEvent extends NegativeEvents {
@@ -10,26 +12,42 @@ public class StormEvent extends NegativeEvents {
 
     @Override
     public void applyEvent() {
-        int randomeStormChance = (int) (Math.random() * 100); // Random number between 0 and 99
-//        IO.println("__DEVELOPER__: Storm Chance is " + randomeStormChance);
+        int roll = (int) (Math.random() * 100);
 
         IO.printSlowByChar(">>Results of the storm: ");
-        if (randomeStormChance < 10) {
-            IO.printSlowByChar("You are very lucky! The storm passed by without causing any damage");
-        } else if (randomeStormChance < 50) {
-            IO.printSlowByChar("The storm caused some damage to your crops, but it is not too bad. You lost _25%_ of your _WEED_ resources.");
-            // Code to reduce food resources by 25%
-        } else if (randomeStormChance < 90) {
-            IO.printSlowByChar("The storm was devastating! You lost _80%_ of your _WEED_ resources.");
-            // Code to reduce food resources by 80%
-        } else if (randomeStormChance < 100) {
-            IO.printSlowByChar("It was the storm of the century! You lost _100%_ of your _WEED_ resources and _ALL_ your _FARMLAND_ is destroyed.");
-            // Code to reduce food resources by 100%
+
+        if (roll < 10) {
+            // 10% – no damage
+            IO.printSlowByChar("You are very lucky! The storm passed by without causing any damage.");
+
+        } else if (roll < 50) {
+            // 40% – lose 25% of Weed
+            int lost = GameState.getWeedInstance().reduceByPercent(25);
+            IO.printSlowByChar("The storm caused some damage to your crops, but it is not too bad.");
+            IO.printSlowByChar("You lost 25% of your WEED resources. (-" + lost + " Weed)");
+
+        } else if (roll < 90) {
+            // 40% – lose 80% of Weed
+            int lost = GameState.getWeedInstance().reduceByPercent(80);
+            IO.printSlowByChar("The storm was devastating! You lost 80% of your WEED resources. (-" + lost + " Weed)");
+
         } else {
-            IO.println("ERROR: Storm Chance is out of bounds. This should never happen.");
-            // Code to reduce food resources by 100% and population by 50%
+            // 10% – lose ALL Weed and destroy ALL FarmLands
+            int lost = GameState.getWeedInstance().getAmount();
+            GameState.getWeedInstance().reduceByPercent(100);
+
+            // Collect FarmLands first to avoid ConcurrentModificationException
+            java.util.List<Buildings.Buildings> farmlands = GameState.getPlacedBuildings().stream()
+                    .filter(b -> b instanceof FarmLand)
+                    .toList();
+
+            for (Buildings.Buildings farm : farmlands) {
+                GameState.removeBuilding(farm);
+            }
+
+            IO.printSlowByChar("It was the storm of the century!");
+            IO.printSlowByChar("You lost ALL your WEED resources (-" + lost + " Weed)");
+            IO.printSlowByChar("and ALL " + farmlands.size() + " FarmLand(s) have been destroyed!");
         }
-
-
     }
 }

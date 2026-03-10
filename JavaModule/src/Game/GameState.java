@@ -60,6 +60,22 @@ public class GameState {
         return java.util.Collections.unmodifiableList(placedBuildings);
     }
 
+    /**
+     * Removes a building from the registry, frees its cell and resets the
+     * map tile back to GREEN (plain land).
+     */
+    public static void removeBuilding(Buildings building) {
+        placedBuildings.remove(building);
+        if (building.x >= 0 && building.y >= 0) {
+            occupiedCells.remove(building.x + "," + building.y);
+            if (currentMap != null
+                    && building.y < currentMap.length
+                    && building.x < currentMap[building.y].length) {
+                currentMap[building.y][building.x] = "GREEN";
+            }
+        }
+    }
+
     // ---------------------------------------------------------------
     // Construction helpers
     // ---------------------------------------------------------------
