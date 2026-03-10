@@ -2,6 +2,6 @@ package Resources;
 
 public class WorkforceResources extends Resources {
     public WorkforceResources() {
-        super("Workforce", 0);
+        super("Workforce", 10);
     }
 }

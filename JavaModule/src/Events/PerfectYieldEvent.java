@@ -8,7 +8,7 @@ import Game.IO;
 public class PerfectYieldEvent extends PositiveEvents {
     public PerfectYieldEvent() {
         super("Perfect Yield", "The sun is strong and the rain is rich, resulting in a perfect yield for your crops. \n" +
-                "Results of the Yield" +
+                ">>Results of the Yield \n" +
                 ">>You gain _50%_ more _WEED_ resources this round.");
     }
 

@@ -26,7 +26,6 @@ public class Round {
         Gameboard.printPlanet(chosenMapSizeInt);
         ActionMenu.printActionMenu(roundCounterInt);
         Events.triggerPossibleEvent();
-        IO.println(GameState.getPlacedBuildings().toString());
     }
 
     /**

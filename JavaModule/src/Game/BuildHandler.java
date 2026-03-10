@@ -33,15 +33,15 @@ public class BuildHandler {
         }
     }
 
-    protected static void bauenStarten(Buildings.Buildings building) {
-        if (!GameState.kannBauen(building)) {
-            IO.println("Nicht genug Ressourcen für " + building.displayName + "!");
+    protected static void bauenStarten(Buildings.Buildings template) {
+        if (!GameState.kannBauen(template)) {
+            IO.println("Nicht genug Ressourcen für " + template.displayName + "!");
             return;
         }
 
-        if (!GameState.hatGenugArbeitskraft(building)) {
-            IO.println("Nicht genug Arbeitskraft für " + building.displayName + "!");
-            IO.println("Verfügbar: " + (GameState.getPopulationInstance().getAmount() - GameState.getPlacedBuildings().stream().mapToInt(Buildings.Buildings::getWorkforceRequired).sum()) + " | Benötigt: " + building.getWorkforceRequired());
+        if (!GameState.hatGenugArbeitskraft(template)) {
+            IO.println("Nicht genug Arbeitskraft für " + template.displayName + "!");
+            IO.println("Verfügbar: " + (GameState.getPopulationInstance().getAmount() - GameState.getPlacedBuildings().stream().mapToInt(Buildings.Buildings::getWorkforceRequired).sum()) + " | Benötigt: " + template.getWorkforceRequired());
             return;
         }
 
@@ -75,6 +75,9 @@ public class BuildHandler {
             return;
         }
 
+        // Create a fresh instance so each placed building has its own coordinates
+        Buildings.Buildings building = createNewInstance(template);
+
         GameState.ressourcenAbziehen(building);
         building.x = x;
         building.y = y;
@@ -84,5 +87,20 @@ public class BuildHandler {
 
         IO.println(building.displayName + " erfolgreich gebaut bei (" + x + ", " + y + ")!");
         ActionMenu.printResources();
+    }
+
+    /**
+     * Creates a new instance of the same building type so that each placed
+     * building is a unique object with its own x/y coordinates.
+     */
+    private static Buildings.Buildings createNewInstance(Buildings.Buildings template) {
+        if (template instanceof FarmLand)     return new FarmLand();
+        if (template instanceof Bakery)       return new Bakery();
+        if (template instanceof Lumberjack)   return new Lumberjack();
+        if (template instanceof NormalHouse)   return new NormalHouse();
+        if (template instanceof Stonemason)    return new Stonemason();
+        if (template instanceof Quarry)        return new Quarry();
+        if (template instanceof TreeFarm)      return new TreeFarm();
+        throw new IllegalArgumentException("Unknown building type: " + template.getClass().getName());
     }
 }
