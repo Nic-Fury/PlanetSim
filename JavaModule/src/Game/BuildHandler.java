@@ -11,12 +11,12 @@ import Buildings.Quarry;
 public class BuildHandler {
 
     protected static final NormalHouse haus       = new NormalHouse();
-    protected static final FarmLand    farm        = new FarmLand();
-    protected static final Lumberjack  lumberjack  = new Lumberjack();
-    protected static final Bakery      bakery      = new Bakery();
-    protected static final Stonemason    stonemason = new Stonemason();
-    protected static final Quarry        quarry        = new Quarry();
-    protected static final TreeFarm    treeFarm    = new TreeFarm();
+    protected static final FarmLand    farm       = new FarmLand();
+    protected static final Lumberjack  lumberjack = new Lumberjack();
+    protected static final Bakery      bakery     = new Bakery();
+    protected static final Stonemason  stonemason = new Stonemason();
+    protected static final Quarry      quarry     = new Quarry();
+    protected static final TreeFarm    treeFarm   = new TreeFarm();
 
     protected static void executeBuildingAction(int buildchoice) {
         switch (buildchoice) {

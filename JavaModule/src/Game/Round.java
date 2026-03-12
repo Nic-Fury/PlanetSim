@@ -23,10 +23,26 @@ public class Round {
 
     public static void startRound(int chosenMapSizeInt, int roundCounterInt){
         updateResources();
+        checkForWinningCondition(roundCounterInt);
+        ActionMenu.printDayInfo(roundCounterInt);
         Gameboard.printPlanet(chosenMapSizeInt);
         ActionMenu.printActionMenu(roundCounterInt);
         Events.triggerPossibleEvent();
     }
+
+    private static void checkForWinningCondition(int roundCounterInt) {
+        // --- Winning Condition: Population reaches 100 ---
+        if (GameState.getPopulationInstance().getAmount() >= 100) {
+            IO.println();
+            IO.printSlowByChar("Congratulations! You've reached a population of 100 and won the game!");
+            IO.println("It took you " + roundCounterInt + " days to achieve this milestone.");
+            System.exit(0);
+//            return true;
+        }
+//        return false;
+    }
+
+
 
     /**
      * Delegates production to each placed building.

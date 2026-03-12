@@ -55,6 +55,12 @@ public class ActionMenu {
         return chosenMapSizeInt;
     }
 
+    protected static void printDayInfo(int roundCounterInt) {
+        IO.println("+---------------------------------------------+");
+        IO.println("|================= Day " + String.format("%03d",roundCounterInt) +" ===================|");
+        IO.println("+--------------------"+    "---"                              +"----------------------+");
+    }
+
     public static void printActionMenu(int roundCounterInt){
         printResources();
         printActions(roundCounterInt);
@@ -64,8 +70,8 @@ public class ActionMenu {
         IO.printlnSlow(5,"+---------------------------------------------+");
         // From the class GameState we get the resource instances and execute the getAmount() method
         IO.printSlowByChar(5,"| Gold:       " + String.format("%03d",GameState.getGoldInstance().getAmount()) +      " |  Wood: " + String.format("%03d",GameState.getWoodInstance().getAmount()) + " |  Stone: "+ String.format("%03d",GameState.getStoneInstance().getAmount()) +"  |");
-        IO.printSlowByChar(5,"| Population: " + String.format("%03d",GameState.getPopulationInstance().getAmount()) +" |  Weed: " + String.format("%03d",GameState.getWeedInstance().getAmount()) + " |  Bread: "+ String.format("%03d",GameState.getBreadInstance().getAmount()) +"  |");
-        IO.printSlowByChar(5,"| Workforce:  " + String.format("%03d", GameState.getWorkforceInstance().getAmount()) + " |  ????: " + "..." + "                |");
+        IO.printSlowByChar(5,"| Workforce:  " + String.format("%03d", GameState.getWorkforceInstance().getAmount()) + " |  Weed: " + String.format("%03d",GameState.getWeedInstance().getAmount()) + " |  Bread: "+ String.format("%03d",GameState.getBreadInstance().getAmount()) +"  |");
+        IO.printSlowByChar(5,"|>>>>>>>>>>>>>> Population: " + String.format("%03d",GameState.getPopulationInstance().getAmount()) +" <<<<<<<<<<<<<<|");
         IO.printlnSlow(5,"+---------------------------------------------+");
     }
 
