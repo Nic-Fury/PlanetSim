@@ -7,6 +7,7 @@ import Buildings.TreeFarm;
 import Buildings.NormalHouse;
 import Buildings.Stonemason;
 import Buildings.Quarry;
+import java.util.Set;
 
 public class BuildHandler {
 
@@ -67,6 +68,14 @@ public class BuildHandler {
 
         if (map[y][x].equals("BLANC")) {
             IO.println("Auf diesem Feld kannst du nicht bauen!");
+            return;
+        }
+
+        // Biome-Prüfung: wenn das Template erlaubte Biome angibt, muss das aktuelle Tile dazugehören
+        String tile = map[y][x];
+        Set<String> allowed = template.getAllowedBiomes();
+        if (allowed != null && !allowed.contains(tile)) {
+            IO.println("Auf diesem Feld kannst du kein " + template.displayName.trim() + " bauen (Biome: " + tile + "). Erlaubte Biome: " + allowed);
             return;
         }
 

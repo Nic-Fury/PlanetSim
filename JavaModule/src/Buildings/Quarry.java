@@ -3,6 +3,8 @@ package Buildings;
 import Game.GameState;
 import Resources.Resources;
 
+import java.util.Set;
+
 public class Quarry extends IndustryBuildings {
     public static final int Stone_PRO_RUNDE = 5;
 
@@ -18,4 +20,9 @@ public class Quarry extends IndustryBuildings {
 
     @Override
     public int getWorkforceRequired() { return 3; }
+
+    @Override
+    public Set<String> getAllowedBiomes() {
+        return Set.of("GRAY");
+    }
 }

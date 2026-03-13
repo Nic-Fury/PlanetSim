@@ -2,6 +2,7 @@ package Buildings;
 
 import Game.IO;
 import Resources.Resources;
+import java.util.Set;
 
 /**
  * Base class for all buildings.
@@ -54,7 +55,7 @@ public abstract class Buildings {
 
     /**
      * Returns the resource this building consumes per produced unit,
-     * or {@code null} if the building consumes nothing.
+     * or {@codenull} if the building consumes nothing.
      *
      * Example: a Bakery consumes Weed to produce Bread.
      */
@@ -79,6 +80,11 @@ public abstract class Buildings {
      */
     public int getPopulationConsumptionPerUnit() { return 0; }
 
+    /**
+     * Returns allowed biome names (e.g. "GREEN", "BLUE", "YELLOW", "GRAY").
+     * If this returns null the building is allowed on any non-BLANC tile.
+     */
+    public Set<String> getAllowedBiomes() { return null; }
 
     // ------------------------------------------------------------------
     // Round tick

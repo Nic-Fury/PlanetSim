@@ -3,6 +3,8 @@ package Buildings;
 import Game.GameState;
 import Resources.Resources;
 
+import java.util.Set;
+
 public class Lumberjack extends IndustryBuildings {
     public static final int HOLZ_PRO_RUNDE = 2;
 
@@ -18,4 +20,9 @@ public class Lumberjack extends IndustryBuildings {
 
     @Override
     public int getWorkforceRequired() { return 2; }
+
+    @Override
+    public Set<String> getAllowedBiomes() {
+        return Set.of("GREEN");
+    }
 }
