@@ -9,7 +9,7 @@ public class Stonemason extends IndustryBuildings {
     public static final int Stone_PRO_RUNDE = 2;
 
     public Stonemason() {
-        super("Stonemason  ", "[S]", 4, 6);
+        super("Stonemason  ", "[S]", 4, 6,2);
     }
 
     @Override

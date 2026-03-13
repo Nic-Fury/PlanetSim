@@ -9,7 +9,7 @@ public class TreeFarm extends IndustryBuildings {
     public static final int HOLZ_PRO_RUNDE = 5;
 
     public TreeFarm() {
-        super("TreeFarm  ", "[T]", 15, 10);
+        super("TreeFarm  ", "[T]", 15, 10,5);
     }
 
     @Override

@@ -1,3 +1,4 @@
+// java
 package Buildings;
 
 import Game.GameState;
@@ -9,7 +10,7 @@ public class Quarry extends IndustryBuildings {
     public static final int Stone_PRO_RUNDE = 5;
 
     public Quarry() {
-        super("Quarry  ", "[Q]", 15, 20);
+        super("Quarry  ", "[Q]", 15, 20, 10);
     }
 
     @Override

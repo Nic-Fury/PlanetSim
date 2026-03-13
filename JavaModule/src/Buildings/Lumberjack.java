@@ -9,7 +9,7 @@ public class Lumberjack extends IndustryBuildings {
     public static final int HOLZ_PRO_RUNDE = 2;
 
     public Lumberjack() {
-        super("Lumberjack  ", "[L]", 4, 6);
+        super("Lumberjack  ", "[L]", 4, 6, 0);
     }
 
     @Override

@@ -10,7 +10,7 @@ public class Bakery extends IndustryBuildings {
     public static final int WEED_PRO_BREAD     = 2;  // consumed Weed per produced Bread
 
     public Bakery() {
-        super("Bakery    ", "[B]", 10, 5);
+        super("Bakery    ", "[B]", 10, 5,5);
     }
 
     @Override

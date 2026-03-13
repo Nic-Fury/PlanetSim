@@ -13,7 +13,6 @@ import java.util.List;
  *
  ***********************************************************************/
 
-
 public class GameState {
     private static final GoldResources       myGold       = new GoldResources();
     private static final WoodResources       myWood       = new WoodResources();
@@ -81,12 +80,14 @@ public class GameState {
     // ---------------------------------------------------------------
     public static boolean kannBauen(Buildings b) {
         return myGold.affordableUnits(b.goldKosten) >= 1
-            && myWood.affordableUnits(b.holzKosten) >= 1;
+                && myWood.affordableUnits(b.holzKosten) >= 1
+                && myStone.affordableUnits(b.steinKosten) >= 1;
     }
 
     public static void ressourcenAbziehen(Buildings b) {
         myGold.subResources(b.goldKosten);
         myWood.subResources(b.holzKosten);
+        myStone.subResources(b.steinKosten);
     }
 
     // ---------------------------------------------------------------
