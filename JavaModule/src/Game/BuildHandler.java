@@ -29,6 +29,7 @@ public class BuildHandler {
             case 5 -> bauenStarten(treeFarm);
             case 6 -> bauenStarten(stonemason);
             case 7 -> bauenStarten(quarry);
+            case 100 -> executeBuildingCheat();
 
             case 0 -> IO.println("Bauen abgebrochen.");
             default -> IO.println("Ungültige Eingabe.");
@@ -47,7 +48,7 @@ public class BuildHandler {
 
         if (!checkBuildFieldAllowed(template, x, y, false)) return;
 
-        buildAtCoordinates(template, x, y);
+        buildAtCoordinates(template, x, y, true);
     }
 
     private static boolean checkForNeededResources(Buildings.Buildings template) {
@@ -169,12 +170,12 @@ public class BuildHandler {
         return allowed == null || allowed.contains(tile);
     }
 
-    private static void buildAtCoordinates(Buildings.Buildings template, int x, int y) {
+    private static void buildAtCoordinates(Buildings.Buildings template, int x, int y, boolean isNoCheat) {
         Buildings.Buildings building = createNewInstance(template);
 
         String bgBiomeColor = GameState.getCurrentMap()[y][x];
 
-        GameState.ressourcenAbziehen(building);
+        if(isNoCheat) GameState.ressourcenAbziehen(building);
         building.x = x;
         building.y = y;
         Gameboard.printSingleColorBlockAtCoordinates(building.buildingSymbolColor, bgBiomeColor, x, y);
@@ -182,7 +183,7 @@ public class BuildHandler {
         GameState.markCellAsOccupied(x, y);
 
         IO.println(building.displayName + " erfolgreich gebaut bei (" + x + ", " + y + ")!");
-        ActionMenu.printResources();
+        if(isNoCheat) ActionMenu.printResources();
     }
 
     /**
@@ -198,5 +199,30 @@ public class BuildHandler {
         if (template instanceof Quarry)        return new Quarry();
         if (template instanceof TreeFarm)      return new TreeFarm();
         throw new IllegalArgumentException("Unknown building type: " + template.getClass().getName());
+    }
+
+    private static void executeBuildingCheat() {
+        IO.printlnSlow("CHEAT ACTIVATED: 5 Buildings will be placed at random valid coordinates without consuming resources BUT workforce.");
+        for (int i = 0; i < 5; i++) {
+            int randomChoice = ThreadLocalRandom.current().nextInt(1, 8);
+            Buildings.Buildings template;
+            switch (randomChoice) {
+                case 1 -> template = haus;
+                case 2 -> template = farm;
+                case 3 -> template = bakery;
+                case 4 -> template = lumberjack;
+                case 5 -> template = treeFarm;
+                case 6 -> template = stonemason;
+                case 7 -> template = quarry;
+                default -> throw new IllegalStateException("Unexpected value: " + randomChoice);
+            }
+
+            int[] coordinates = findRandomValidCoordinates(template, 100);
+            if (coordinates != null) {
+                buildAtCoordinates(template, coordinates[0], coordinates[1], false);
+            } else {
+                IO.println("Keine validen Koordinaten gefunden für " + template.displayName.trim() + ". Gebäude übersprungen.");
+            }
+        }
     }
 }

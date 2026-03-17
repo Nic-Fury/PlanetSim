@@ -3,6 +3,8 @@ package Game;
 import Buildings.Buildings;
 import Resources.Resources;
 import Events.Events;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Round {
 
@@ -22,9 +24,9 @@ public class Round {
     }
 
     public static void startRound(int chosenMapSizeInt, int roundCounterInt){
-        updateResources();
         checkForWinningCondition(roundCounterInt);
         ActionMenu.printDayInfo(roundCounterInt);
+        printResourceUpdate(updateResources()); //updateResources() handles the logic of resource production and workforce synchronization, returns a map of what was produced this round for printing in printResourceUpdate()
         Gameboard.printPlanet(chosenMapSizeInt);
         ActionMenu.printActionMenu(roundCounterInt);
         Events.triggerPossibleEvent();
@@ -50,12 +52,15 @@ public class Round {
      * what it produces and consumes – this method just triggers them all generically.
      * Adding a new building type requires zero changes here.
      */
-    private static void updateResources() {
+    private static Map<String, Integer> updateResources() {
 
         // --- Arbeitskraft-Bedarf aller platzierten Gebäude summieren ---
         int totalWorkforceRequired = GameState.getPlacedBuildings().stream()
                 .mapToInt(Buildings::getWorkforceRequired)
                 .sum();
+
+        // Aggregiert produzierte Ressourcen dieser Runde (z. B. wood -> 8)
+        Map<String, Integer> producedThisRound = new HashMap<>();
 
         for (Buildings building : GameState.getPlacedBuildings()) {
 
@@ -69,22 +74,14 @@ public class Round {
                     if (popFood.affordableUnits(popCost) >= building.getPopulationPerRound()) {
                         popFood.subResources(building.getPopulationPerRound() * popCost);
                         GameState.getPopulationInstance().addResources(building.getPopulationPerRound());
-                        java.lang.IO.println(building.displayName.trim() + " generated "
-                                + building.getPopulationPerRound() + " "
-                                + GameState.getPopulationInstance().getResourceTypeName()
-                                + " (consumed " + (building.getPopulationPerRound() * popCost)
-                                + " " + popFood.getResourceTypeName() + ")");
                     } else {
                         java.lang.IO.println(building.displayName.trim()
-                                + " could not generate Population – not enough "
+                                + " could not generate Population - not enough "
                                 + popFood.getResourceTypeName() + "!");
                     }
                 } else {
-                    // Kein Verbrauch nötig – direkt produzieren
+                    // Kein Verbrauch noetig - direkt produzieren
                     GameState.getPopulationInstance().addResources(building.getPopulationPerRound());
-                    java.lang.IO.println(building.displayName.trim() + " generated "
-                            + building.getPopulationPerRound() + " "
-                            + GameState.getPopulationInstance().getResourceTypeName());
                 }
             }
 
@@ -94,27 +91,24 @@ public class Round {
             int produced = building.produceResources();
 
             if (produced > 0) {
-                String msg = building.displayName.trim() + " produced " + produced
-                        + " " + building.getProducedResource().getResourceTypeName();
-                if (building.getConsumedResource() != null && building.getConsumptionPerUnit() > 0) {
-                    msg += " (consumed " + (produced * building.getConsumptionPerUnit())
-                            + " " + building.getConsumedResource().getResourceTypeName() + ")";
-                }
-                java.lang.IO.println(msg);
+                String resourceName = building.getProducedResource().getResourceTypeName();
+                producedThisRound.merge(resourceName, produced, Integer::sum);
             } else {
                 java.lang.IO.println(building.displayName.trim() + " could not produce "
                         + building.getProducedResource().getResourceTypeName()
-                        + " – not enough "
+                        + " - not enough "
                         + (building.getConsumedResource() != null
                         ? building.getConsumedResource().getResourceTypeName()
                         : "resources") + "!");
             }
         }
 
-        // --- Workforce synchronisieren: Population − benötigte Arbeitskraft ---
+        // --- Workforce synchronisieren: Population - benoetigte Arbeitskraft ---
         int availableWorkforce = GameState.getPopulationInstance().getAmount() - totalWorkforceRequired;
         int currentWorkforce   = GameState.getWorkforceInstance().getAmount();
         GameState.getWorkforceInstance().addResources(availableWorkforce - currentWorkforce);
+
+        return producedThisRound;
 
         // --- Log: Arbeitskraft-Status --- (optional)
         /*
@@ -122,6 +116,12 @@ public class Round {
                 + " (Population: " + GameState.getPopulationInstance().getAmount()
                 + " | Required: " + totalWorkforceRequired + ")");
         */
+    }
+
+    private static void printResourceUpdate(Map<String, Integer> producedThisRound) {
+        for (Map.Entry<String, Integer> entry : producedThisRound.entrySet()) {
+            IO.println(">> Today " + entry.getValue() + " " + entry.getKey() + " have been produced");
+        }
     }
 
 }

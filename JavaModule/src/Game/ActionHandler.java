@@ -21,8 +21,8 @@ public class ActionHandler {
                     System.out.println("You chose to end your turn.");
                     // Call method to end turn
                     break;
-                case 0:
-                    System.out.println("DEVELOPER MODE");
+                case 100:
+                    System.out.println("CHEAT ACTIVATED: Developer Mode");
                     executeDeveloperMode();
                     break;
                 default:
