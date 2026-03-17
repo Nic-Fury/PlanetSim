@@ -5,6 +5,14 @@ _Projekt im Ramen der Advanced SWE Vorlesung 2025/26_
 Ein Consolen basiertes Simulationsspiel, in dem der Spieler die Aufgabe hat, einen Planeten zu erschaffen und zu erhalten.  
 Dabei muss er  die Ressourcen des Planeten im Auge behalten, um das Überleben und Entwickeln der Bewohner zu gewährleisten.
 
+## Cheats 🤑
+Man steurt das Spiel durch die Eingabe von Werten in der Console.
+Es werden immer die validen Optionen angezeigt, mit denen man das Spiel normalen spielen kann 
+Es gibt in manchen Fällen jedoch auch noch weitere Optionen, die **nicht vorgeschagen** werden
+Diese können zu Testzwecken verwendet werden, um manche Szenarium beschläunigt zu erreichen:
+- *ActionMenu:* `100` erlaubt es sich in einer Resource 100 Einheiten hinzuzufügen
+- *BuildMenu:* `100` plaziert eine Menge von verschiedenen Gebäuden auf einmal, ohne Resourcen zu verwenden
+
 ## Setup🧑‍💻
 - clone `https://github.com/Nic-Fury/PlanetSim`
 
