@@ -20,8 +20,8 @@ public class BuildHandler {
     protected static final Quarry      quarry     = new Quarry();
     protected static final TreeFarm    treeFarm   = new TreeFarm();
 
-    protected static void executeBuildingAction(int buildchoice) {
-        switch (buildchoice) {
+    protected static void executeBuildingAction(int buildChoice) {
+        switch (buildChoice) {
             case 1 -> bauenStarten(haus);
             case 2 -> bauenStarten(farm);
             case 3 -> bauenStarten(bakery);
@@ -172,10 +172,12 @@ public class BuildHandler {
     private static void buildAtCoordinates(Buildings.Buildings template, int x, int y) {
         Buildings.Buildings building = createNewInstance(template);
 
+        String bgBiomeColor = GameState.getCurrentMap()[y][x];
+
         GameState.ressourcenAbziehen(building);
         building.x = x;
         building.y = y;
-        Gameboard.printSingleColorBlockAtCoordinates(building.color, x, y);
+        Gameboard.printSingleColorBlockAtCoordinates(building.buildingSymbolColor, bgBiomeColor, x, y);
         GameState.registerBuilding(building);
         GameState.markCellAsOccupied(x, y);
 

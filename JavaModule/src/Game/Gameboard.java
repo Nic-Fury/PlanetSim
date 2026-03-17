@@ -192,51 +192,115 @@ public class Gameboard {
         }
     }
 
+    /**
+     * Renders a single map cell in the console.
+     *
+     * Usage:
+     * - Pass a plain biome token (for example "GREEN", "BLUE", "YELLOW")
+     *   to print a normal terrain tile.
+     * - Pass a composed value in the format "BIOME|symbol" to print a
+     *   building symbol on top of its original biome background.
+     *
+     * How it works:
+     * - Detects composed building tiles via the "|" separator.
+     * - Delegates composed values to {@link #printBuildingBlock(String, String)}.
+     * - Otherwise maps the biome token to an ANSI background color and prints
+     *   a 3-character wide tile block.
+     *
+     * @param colorName biome token or composed tile value ("BIOME|symbol")
+     */
     private static void printSingleColorBlock(String colorName){
-        //  Method uses ANSI escape codes for background colors
-
-        // Gibt es etwas besseres hier als einen switch case? Wahrscheinlich nicht, da es nur 8 Farben gibt.
         String name = colorName == null ? "" : colorName.trim().toUpperCase();
 
-        // Check if the colorName is a building code (enclosed in square brackets)
-        if (colorName != null && colorName.startsWith("[") && colorName.endsWith("]")) {
-            printBuildingBlock(colorName);
+        // Format "BIOME|symbol" – building on top of a biome tile
+        if (colorName != null && colorName.contains("|")) {
+            String[] parts = colorName.split("\\|", 2);
+            printBuildingBlock(parts[1], parts[0]);
             return;
         }
 
         String bg = switch (name) {
-            case "BLACK" -> "\u001b[40m";
-            case "RED" -> "\u001b[41m";
-            case "GREEN" -> "\u001b[42m";
-            case "YELLOW" -> "\u001b[43m";
-            case "BLUE" -> "\u001b[44m";
+            case "BLACK"   -> "\u001b[40m";
+            case "RED"     -> "\u001b[41m";
+            case "GREEN"   -> "\u001b[42m";
+            case "YELLOW"  -> "\u001b[43m";
+            case "BLUE"    -> "\u001b[44m";
             case "MAGENTA" -> "\u001b[45m";
-            case "CYAN" -> "\u001b[46m";
-            case "WHITE" -> "\u001b[47m";
-            case "BLANC" -> "\u001b[0m";
-            case "GRAY" -> "\u001b[100m"; // heller schwarzer Hintergrund als "grau"
-            default -> "\u001b[0m";
+            case "CYAN"    -> "\u001b[46m";
+            case "WHITE"   -> "\u001b[47m";
+            case "BLANC"   -> "\u001b[0m";
+            case "GRAY"    -> "\u001b[100m";
+            default        -> "\u001b[0m";
         };
 
         String ANSI_RESET = "\u001b[0m";
         IO.print(bg + "   " + ANSI_RESET);
     }
 
-    private static void printBuildingBlock(String buildingCode) {
-        String ANSI_GREEN_BG = "\u001b[42m";
-        String ANSI_RESET    = "\u001b[0m";
+    /**
+     * Prints a building symbol with the provided biome background color.
+     *
+     * Usage:
+     * - buildingCode should be the visual building token (for example "[H]").
+     * - bgColor should be the original biome token of the tile
+     *   (for example "GREEN", "BLUE", "YELLOW").
+     *
+     * How it works:
+     * - Converts bgColor to the matching ANSI background escape code.
+     * - Prints buildingCode on that background.
+     * - Resets ANSI formatting afterwards.
+     * - Falls back to a green background if bgColor is unknown.
+     *
+     * @param buildingCode building symbol/token to render
+     * @param bgColor original biome color token for the tile background
+     */
+    private static void printBuildingBlock(String buildingCode, String bgColor) {
+        String ANSI_RESET = "\u001b[0m";
 
-        java.lang.IO.print(ANSI_GREEN_BG + buildingCode + ANSI_RESET);
+        String bg = switch (bgColor == null ? "" : bgColor.trim().toUpperCase()) {
+            case "BLACK"   -> "\u001b[40m";
+            case "RED"     -> "\u001b[41m";
+            case "GREEN"   -> "\u001b[42m";
+            case "YELLOW"  -> "\u001b[43m";
+            case "BLUE"    -> "\u001b[44m";
+            case "MAGENTA" -> "\u001b[45m";
+            case "CYAN"    -> "\u001b[46m";
+            case "WHITE"   -> "\u001b[47m";
+            case "GRAY"    -> "\u001b[100m";
+            default        -> "\u001b[42m"; // fallback: grün
+        };
+
+        java.lang.IO.print(bg + buildingCode + ANSI_RESET);
     }
 
-    public static void printSingleColorBlockAtCoordinates(String colorName, int x, int y){
+    /**
+     * Updates one tile with a building overlay and redraws the map.
+     *
+     * Usage:
+     * - Call this after coordinates were validated and a building is placed.
+     * - buildingSymbolColor is the symbol/token to display for the building.
+     * - bgBiomeColor is the biome token that existed at (x, y) before placement.
+     *
+     * How it works:
+     * - Stores the tile as "BIOME|symbol" so rendering can keep the original
+     *   biome background under the building symbol.
+     * - Writes the updated map to {@link GameState}.
+     * - Triggers a redraw via drawMap(currentMap).
+     *
+     * @param buildingSymbolColor symbol/token for the building
+     * @param bgBiomeColor original biome token at the target coordinate
+     * @param x target column index (0-based)
+     * @param y target row index (0-based)
+     */
+    public static void printSingleColorBlockAtCoordinates(String buildingSymbolColor, String bgBiomeColor, int x, int y){
         String[][] currentMap = GameState.getCurrentMap();
         if (currentMap == null || y < 0 || y >= currentMap.length || x < 0 || x >= currentMap[y].length) {
             IO.println("Ungültige Koordinaten oder Map nicht geladen!");
             return;
         }
 
-        currentMap[y][x] = colorName;
+        // Format: "BIOME|symbol" – so drawMap can restore bg + symbol on redraw
+        currentMap[y][x] = bgBiomeColor + "|" + buildingSymbolColor;
         GameState.setCurrentMap(currentMap);
         drawMap(currentMap);
     }

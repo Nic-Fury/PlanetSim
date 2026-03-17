@@ -6,7 +6,7 @@ import java.util.Set;
 
 public abstract class Buildings {
     public final String displayName;
-    public final String color;
+    public final String buildingSymbolColor;
     public final int goldKosten;
     public final int holzKosten;
     public final int steinKosten;
@@ -15,9 +15,9 @@ public abstract class Buildings {
     public int y = -1;
 
     // 5-Parameter Konstruktor (bestehender)
-    public Buildings(String displayName, String color, int goldKosten, int holzKosten, int steinKosten) {
+    public Buildings(String displayName, String buildingSymbolColor, int goldKosten, int holzKosten, int steinKosten) {
         this.displayName  = displayName;
-        this.color        = color;
+        this.buildingSymbolColor = buildingSymbolColor;
         this.goldKosten   = goldKosten;
         this.holzKosten   = holzKosten;
         this.steinKosten  = steinKosten;
@@ -25,8 +25,8 @@ public abstract class Buildings {
 
     // Neuer 4-Parameter Überladungs-Konstruktor für Rückwärtskompatibilität
     // Setzt steinKosten standardmäßig auf 0.
-    public Buildings(String displayName, String color, int goldKosten, int holzKosten) {
-        this(displayName, color, goldKosten, holzKosten, 0);
+    public Buildings(String displayName, String buildingSymbolColor, int goldKosten, int holzKosten) {
+        this(displayName, buildingSymbolColor, goldKosten, holzKosten, 0);
     }
 
     // ... restlicher Code unverändert ...

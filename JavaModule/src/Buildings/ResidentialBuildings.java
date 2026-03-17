@@ -7,8 +7,8 @@ import Resources.Resources;
  * Residential buildings produce no resource by default.
  */
 public abstract class ResidentialBuildings extends Buildings {
-    public ResidentialBuildings(String displayName, String color, int goldKosten, int holzKosten, int steinKosten) {
-        super(displayName, color, goldKosten, holzKosten, steinKosten);
+    public ResidentialBuildings(String displayName, String buildingSymbolColor, int goldKosten, int holzKosten, int steinKosten) {
+        super(displayName, buildingSymbolColor, goldKosten, holzKosten, steinKosten);
     }
 
     @Override
