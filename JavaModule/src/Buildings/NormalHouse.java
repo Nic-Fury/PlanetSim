@@ -7,7 +7,7 @@ import java.util.Set;
 
 public class NormalHouse extends ResidentialBuildings {
     public NormalHouse() {
-        super("House       ", "WHITE", 5, 3,2);
+        super("House       ", "[H]", 5, 3,2);
     }
 
     @Override
