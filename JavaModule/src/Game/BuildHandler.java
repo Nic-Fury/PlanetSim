@@ -8,6 +8,7 @@ import Buildings.NormalHouse;
 import Buildings.Stonemason;
 import Buildings.Quarry;
 import java.util.Set;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class BuildHandler {
 
@@ -38,13 +39,13 @@ public class BuildHandler {
         if (!checkForNeededResources(template)) return;
         if (!checkForNeededWorkforce(template)) return;
 
-        int[] coordinates = readCoordinates();
+        int[] coordinates = readCoordinates(template);
         if (coordinates == null) return;
 
         int x = coordinates[0];
         int y = coordinates[1];
 
-        if (!checkBuildFieldAllowed(template, x, y)) return;
+        if (!checkBuildFieldAllowed(template, x, y, false)) return;
 
         buildAtCoordinates(template, x, y);
     }
@@ -71,44 +72,84 @@ public class BuildHandler {
                 - GameState.getPlacedBuildings().stream().mapToInt(Buildings.Buildings::getWorkforceRequired).sum();
     }
 
-    private static int[] readCoordinates() {
+    private static int[] readCoordinates(Buildings.Buildings template) {
         String[][] map = GameState.getCurrentMap();
         int maxX = map[0].length - 1;
         int maxY = map.length - 1;
 
         IO.println("Koordinaten eingeben (X: 0-" + maxX + ", Y: 0-" + maxY + ")");
+        IO.println("Bei X kannst du statt einer Zahl auch [R] für zufällige, valide Koordinaten eingeben.");
 
+        String xInput = IO.readln("X-Koordinate: ").trim();
+
+        if ("r".equalsIgnoreCase(xInput)) {
+            int[] randomCoordinates = findRandomValidCoordinates(template, 200);
+            if (randomCoordinates == null) {
+                IO.println("Keine validen Zufallskoordinaten gefunden. Bauvorgang abgebrochen.");
+                return null;
+            }
+
+            IO.println("Zufallskoordinaten gewählt: (" + randomCoordinates[0] + ", " + randomCoordinates[1] + ")");
+            return randomCoordinates;
+        }
+
+        int x;
         try {
-            int x = Integer.parseInt(IO.readln("X-Koordinate: ").trim());
-            int y = Integer.parseInt(IO.readln("Y-Koordinate: ").trim());
-            return new int[]{x, y};
+            x = Integer.parseInt(xInput);
         } catch (NumberFormatException e) {
-            IO.println("Ungültige Koordinaten.");
+            IO.println("Ungültige X-Koordinate. Erlaubt sind nur ganze Zahlen oder [R].");
             return null;
         }
+
+        int y;
+        try {
+            y = Integer.parseInt(IO.readln("Y-Koordinate: ").trim());
+        } catch (NumberFormatException e) {
+            IO.println("Ungültige Y-Koordinate. Erlaubt sind nur ganze Zahlen.");
+            return null;
+        }
+
+        return new int[]{x, y};
     }
 
-    private static boolean checkBuildFieldAllowed(Buildings.Buildings template, int x, int y) {
+    private static int[] findRandomValidCoordinates(Buildings.Buildings template, int maxAttempts) {
+        String[][] map = GameState.getCurrentMap();
+        int maxX = map[0].length - 1;
+        int maxY = map.length - 1;
+
+        for (int attempt = 0; attempt < maxAttempts; attempt++) {
+            int x = ThreadLocalRandom.current().nextInt(maxX + 1);
+            int y = ThreadLocalRandom.current().nextInt(maxY + 1);
+
+            if (checkBuildFieldAllowed(template, x, y, true)) {
+                return new int[]{x, y};
+            }
+        }
+
+        return null;
+    }
+
+    private static boolean checkBuildFieldAllowed(Buildings.Buildings template, int x, int y, boolean silent) {
         String[][] map = GameState.getCurrentMap();
 
         if (!isCoordinateInMap(map, x, y)) {
-            IO.println("Koordinaten außerhalb der Karte!");
+            if (!silent) IO.println("Koordinaten außerhalb der Karte!");
             return false;
         }
 
         if (isBlancTile(map, x, y)) {
-            IO.println("Auf diesem Feld kannst du nicht bauen!");
+            if (!silent) IO.println("Auf diesem Feld kannst du nicht bauen!");
             return false;
         }
 
         if (!isAllowedBiome(template, map[y][x])) {
             Set<String> allowed = template.getAllowedBiomes();
-            IO.println("Auf diesem Feld kannst du kein " + template.displayName.trim() + " bauen (Biome: " + map[y][x] + "). Erlaubte Biome: " + allowed);
+            if (!silent) IO.println("Auf diesem Feld kannst du kein " + template.displayName.trim() + " bauen (Biome: " + map[y][x] + "). Erlaubte Biome: " + allowed);
             return false;
         }
 
         if (GameState.isCellOccupied(x, y)) {
-            IO.println("Hier steht bereits ein Gebäude!");
+            if (!silent) IO.println("Hier steht bereits ein Gebäude!");
             return false;
         }
 
