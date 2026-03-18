@@ -30,7 +30,7 @@ public class Gameboard {
 
         drawXCoordinates(mapSize);
 
-        IO.println();
+        IO.printlnSlow(1000,"");
     }
 
     private static String[][] chooseMap(int mapSize){

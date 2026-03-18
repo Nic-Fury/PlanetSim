@@ -30,7 +30,7 @@ public class IO {
      * @param s     the string to print
      * @param delayMs delay in milliseconds between each character (e.g. 40)
      */
-    public static void printSlowByChar(int delayMs, String s) {
+    public static void printlnSlowByChar(int delayMs, String s) {
         for (char c : s.toCharArray()) {
             System.out.print(c);
             try {
@@ -47,8 +47,8 @@ public class IO {
     /**
      * Convenience overload with a default delay of 40 ms per character.
      */
-    public static void printSlowByChar(String s) {
-        printSlowByChar(60,s);
+    public static void printlnSlowByChar(String s) {
+        printlnSlowByChar(60,s);
     }
 
     /**

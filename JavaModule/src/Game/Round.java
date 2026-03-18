@@ -12,7 +12,7 @@ public class Round {
         //Welcome message
         IO.println();
         IO.println();
-        IO.printSlowByChar(String.format("Welcome to Planet Sim!"));
+        IO.printlnSlowByChar(100,">> Welcome to PlanetSim!");
         IO.println();
 
         //Planet name
@@ -36,7 +36,7 @@ public class Round {
         // --- Winning Condition: Population reaches 100 ---
         if (GameState.getPopulationInstance().getAmount() >= 100) {
             IO.println();
-            IO.printSlowByChar("Congratulations! You've reached a population of 100 and won the game!");
+            IO.printlnSlowByChar("Congratulations! You've reached a population of 100 and won the game!");
             IO.println("It took you " + roundCounterInt + " days to achieve this milestone.");
             System.exit(0);
 //            return true;

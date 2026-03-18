@@ -14,22 +14,22 @@ public class StormEvent extends NegativeEvents {
     public void applyEvent() {
         int roll = (int) (Math.random() * 100);
 
-        IO.printSlowByChar(">>Results of the storm: ");
+        IO.printlnSlowByChar(">>Results of the storm: ");
 
         if (roll < 10) {
             // 10% – no damage
-            IO.printSlowByChar("You are very lucky! The storm passed by without causing any damage.");
+            IO.printlnSlowByChar("You are very lucky! The storm passed by without causing any damage.");
 
         } else if (roll < 50) {
             // 40% – lose 25% of Weed
             int lost = GameState.getWeedInstance().reduceByPercent(25);
-            IO.printSlowByChar("The storm caused some damage to your crops, but it is not too bad.");
-            IO.printSlowByChar("You lost 25% of your WEED resources. (-" + lost + " Weed)");
+            IO.printlnSlowByChar("The storm caused some damage to your crops, but it is not too bad.");
+            IO.printlnSlowByChar("You lost 25% of your WEED resources. (-" + lost + " Weed)");
 
         } else if (roll < 90) {
             // 40% – lose 80% of Weed
             int lost = GameState.getWeedInstance().reduceByPercent(80);
-            IO.printSlowByChar("The storm was devastating! You lost 80% of your WEED resources. (-" + lost + " Weed)");
+            IO.printlnSlowByChar("The storm was devastating! You lost 80% of your WEED resources. (-" + lost + " Weed)");
 
         } else {
             // 10% – lose ALL Weed and destroy ALL FarmLands
@@ -45,9 +45,9 @@ public class StormEvent extends NegativeEvents {
                 GameState.removeBuilding(farm);
             }
 
-            IO.printSlowByChar("It was the storm of the century!");
-            IO.printSlowByChar("You lost ALL your WEED resources (-" + lost + " Weed)");
-            IO.printSlowByChar("and ALL " + farmlands.size() + " FarmLand(s) have been destroyed!");
+            IO.printlnSlowByChar("It was the storm of the century!");
+            IO.printlnSlowByChar("You lost ALL your WEED resources (-" + lost + " Weed)");
+            IO.printlnSlowByChar("and ALL " + farmlands.size() + " FarmLand(s) have been destroyed!");
         }
     }
 }

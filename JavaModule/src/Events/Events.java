@@ -51,9 +51,9 @@ public abstract class Events {
         IO.printlnSlow("###############################################\n" +
                    "#~~~~~~~~~~~~~~~Event occurred~~~~~~~~~~~~~~~~#\n" +
                    "###############################################");
-        IO.printSlowByChar(">>The Event " + getDisplayName());
-        IO.printSlowByChar(">>This is a " + (isNegativeEvent() ? "negative" : "positive") + " event.");
-        IO.printSlowByChar(">>Description: " + getDescription());
+        IO.printlnSlowByChar(">>The Event " + getDisplayName());
+        IO.printlnSlowByChar(">>This is a " + (isNegativeEvent() ? "negative" : "positive") + " event.");
+        IO.printlnSlowByChar(">>Description: " + getDescription());
     }
 
     public void printEventOutro() {
