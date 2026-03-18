@@ -33,12 +33,10 @@ public abstract class Events {
 
         Events event = null;
         if (roll < 30) {
-            if (roll < 30) {
-                event = new StormEvent();
-            } else if (roll < 60) {
-                event = new PerfectYieldEvent();
-            }
-        }
+            event = new StormEvent();
+        } else if (roll < 60) {
+            event = new PerfectYieldEvent();
+        } // else: no event (40%)
 
         if (event != null) {
             event.printEventIntro();
