@@ -61,7 +61,7 @@ public class GameState {
 
     /**
      * Removes a building from the registry, frees its cell and resets the
-     * map tile back to GREEN (plain land).
+     * map tile back to the original biome (falls vorhanden) oder auf GREEN.
      */
     public static void removeBuilding(Buildings building) {
         placedBuildings.remove(building);
@@ -70,9 +70,34 @@ public class GameState {
             if (currentMap != null
                     && building.y < currentMap.length
                     && building.x < currentMap[building.y].length) {
-                currentMap[building.y][building.x] = "GREEN";
+                String tile = currentMap[building.y][building.x];
+                if (tile != null && tile.contains("|")) {
+                    // restore original biome part before the '|'
+                    currentMap[building.y][building.x] = tile.split("\\|", 2)[0];
+                } else {
+                    currentMap[building.y][building.x] = "GREEN";
+                }
             }
         }
+    }
+
+    /**
+     * Demolish a building: refund half (floor) of each cost and remove it.
+     */
+    public static void demolishBuilding(Buildings building) {
+        if (building == null) return;
+        int refundGold  = Math.max(0, building.goldKosten / 2);
+        int refundWood  = Math.max(0, building.holzKosten / 2);
+        int refundStone = Math.max(0, building.steinKosten / 2);
+
+        getGoldInstance().addResources(refundGold);
+        getWoodInstance().addResources(refundWood);
+        getStoneInstance().addResources(refundStone);
+
+        IO.println("Demolished " + building.displayName.trim()
+                + " -> refund G:" + refundGold + " W:" + refundWood + " S:" + refundStone);
+
+        removeBuilding(building);
     }
 
     // ---------------------------------------------------------------

@@ -1,4 +1,3 @@
-// java
 package Game;
 
 public class BuildMenu {
@@ -17,6 +16,7 @@ public class BuildMenu {
         IO.println("| [5] " + BuildHandler.treeFarm.displayName    + "   | G: " + BuildHandler.treeFarm.goldKosten   + " | W: " + BuildHandler.treeFarm.holzKosten   + " | S: " + BuildHandler.treeFarm.steinKosten + "     |");
         IO.println("| [6] " + BuildHandler.stonemason.displayName  + " | G: " + BuildHandler.stonemason.goldKosten + "  | W: " + BuildHandler.stonemason.holzKosten + "  | S: " + BuildHandler.stonemason.steinKosten + "     |");
         IO.println("| [7] " + BuildHandler.quarry.displayName      + "     | G: " + BuildHandler.quarry.goldKosten     + " | W: " + BuildHandler.quarry.holzKosten     + " | S: " + BuildHandler.quarry.steinKosten + "    |");
+        IO.println("| [99] Demolish building                         |");
         IO.println("| [0] Cancel                                  |");
         IO.println("+---------------------------------------------+");
 

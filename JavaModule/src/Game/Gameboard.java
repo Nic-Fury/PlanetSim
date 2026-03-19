@@ -1,8 +1,8 @@
 package Game;
 
-import java.util.ArrayDeque;    // Import ok? (Biom spreading)
-import java.util.Deque;         // Import ok? (Biom spreading)
-import java.util.Random;        // Import ok? (Biom spreading)
+import java.util.ArrayDeque;
+import java.util.Deque;
+import java.util.Random;
 
 /**********************************************************************
  *           Diese Klasse ist dazu da, um das Spelfeld (Den Planten)
@@ -327,5 +327,15 @@ public class Gameboard {
     private static void drawYCoordinates(int rowIndex) {
         String ANSI_RESET = "\u001b[0m";
         IO.print(ANSI_RESET + " " + String.format("%02d", rowIndex));
+    }
+
+    /**
+     * Public helper to redraw the current map (if loaded).
+     */
+    public static void redraw() {
+        if (GameState.hasMap()) {
+            // drawMap ist private, aber wir sind innerhalb derselben Klasse
+            drawMap(GameState.getCurrentMap());
+        }
     }
 }
