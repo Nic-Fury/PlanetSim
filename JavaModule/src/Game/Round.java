@@ -1,6 +1,7 @@
 package Game;
 
 import Buildings.Buildings;
+import Buildings.ResidentialBuildings;
 import Resources.Resources;
 import Events.Events;
 import java.util.HashMap;
@@ -32,11 +33,17 @@ public class Round {
         String chosenPlanetName = ActionMenu.readPlanetName();
         int chosenMapSizeInt = ActionMenu.readMapSize();
 
+        //reset Children Counter
+        GameState.resetChildhoodState();
+
+        //from here on its a normal round
         startRound(chosenMapSizeInt, roundCounterInt);
         return chosenMapSizeInt;
     }
 
     public static void startRound(int chosenMapSizeInt, int roundCounterInt){
+        // Start of a new day: children age; two-day-olds become workforce-eligible.
+        GameState.advanceChildhoodDay();
         checkForWinningCondition(roundCounterInt);
         checkForLosingCondition();
         ActionMenu.printDayInfo(roundCounterInt);
@@ -140,23 +147,40 @@ public class Round {
         for (Buildings building : GameState.getPlacedBuildings()) {
 
             // --- Population durch Wohngebäude generieren ---
-            if (building.getPopulationPerRound() > 0) {
-                Resources popFood = building.getPopulationConsumedResource();
-                int popCost      = building.getPopulationConsumptionPerUnit();
+            if (building instanceof ResidentialBuildings residentialBuilding
+                    && residentialBuilding.getPopulationPerRound() > 0) {
+                int populationToProduce = Math.min(
+                        residentialBuilding.getPopulationPerRound(),
+                        residentialBuilding.getRemainingPopulationCapacity()
+                );
+
+                if (populationToProduce <= 0) {
+                    continue;
+                }
+
+                Resources popFood = residentialBuilding.getPopulationConsumedResource();
+                int popCost      = residentialBuilding.getPopulationConsumptionPerUnit();
 
                 if (popFood != null && popCost > 0) {
                     // Nur produzieren wenn genug Bread vorhanden
-                    if (popFood.affordableUnits(popCost) >= building.getPopulationPerRound()) {
-                        popFood.subResources(building.getPopulationPerRound() * popCost);
-                        GameState.getPopulationInstance().addResources(building.getPopulationPerRound());
+                    int affordablePopulation = popFood.affordableUnits(popCost);
+                    populationToProduce = Math.min(populationToProduce, affordablePopulation);
+
+                    if (populationToProduce > 0) {
+                        popFood.subResources(populationToProduce * popCost);
+                        GameState.getPopulationInstance().addResources(populationToProduce);
+                        GameState.addChildrenProducedThisRound(populationToProduce);
+                        residentialBuilding.registerPopulationProduced(populationToProduce);
                     } else {
-                        java.lang.IO.println(building.displayName.trim()
+                        java.lang.IO.println(residentialBuilding.displayName.trim()
                                 + " could not generate Population - not enough "
                                 + popFood.getResourceTypeName() + "!");
                     }
                 } else {
                     // Kein Verbrauch noetig - direkt produzieren
-                    GameState.getPopulationInstance().addResources(building.getPopulationPerRound());
+                    GameState.getPopulationInstance().addResources(populationToProduce);
+                    GameState.addChildrenProducedThisRound(populationToProduce);
+                    residentialBuilding.registerPopulationProduced(populationToProduce);
                 }
             }
 
@@ -179,7 +203,7 @@ public class Round {
         }
 
         // --- Workforce synchronisieren: Population - benoetigte Arbeitskraft ---
-        int availableWorkforce = GameState.getPopulationInstance().getAmount() - totalWorkforceRequired;
+        int availableWorkforce = GameState.getMaturePopulation() - totalWorkforceRequired;
         int currentWorkforce   = GameState.getWorkforceInstance().getAmount();
         GameState.getWorkforceInstance().addResources(availableWorkforce - currentWorkforce);
 

@@ -108,8 +108,7 @@ public class BuildHandler {
     }
 
     private static int getAvailableWorkforce() {
-        return GameState.getPopulationInstance().getAmount()
-                - GameState.getPlacedBuildings().stream().mapToInt(Buildings::getWorkforceRequired).sum();
+        return GameState.getAvailableWorkforce();
     }
 
     private static int[] readCoordinates(Buildings template) {

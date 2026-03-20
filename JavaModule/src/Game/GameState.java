@@ -22,6 +22,10 @@ public class GameState {
     private static final WeedResources       myWeed       = new WeedResources();
     private static final WorkforceResources myWorkforce = new WorkforceResources();
 
+    // Population produced on the current day and previous day is not workforce yet.
+    private static int childrenAge0Days = 0;
+    private static int childrenAge1Day = 0;
+
 
     public static GoldResources       getGoldInstance()       { return myGold; }
     public static WoodResources       getWoodInstance()       { return myWood; }
@@ -30,6 +34,34 @@ public class GameState {
     public static StoneResources      getStoneInstance()      { return myStone; }
     public static WeedResources       getWeedInstance()       { return myWeed; }
     public static WorkforceResources getWorkforceInstance() { return myWorkforce; }
+
+    public static void resetChildhoodState() {
+        childrenAge0Days = 0;
+        childrenAge1Day = 0;
+    }
+
+    public static void advanceChildhoodDay() {
+        // Children from yesterday age by one day; two-day-olds become workforce-eligible.
+        childrenAge1Day = childrenAge0Days;
+        childrenAge0Days = 0;
+    }
+
+    public static void addChildrenProducedThisRound(int amount) {
+        if (amount <= 0) return;
+        childrenAge0Days += amount;
+    }
+
+    public static int getChildrenNotInWorkforce() {
+        return childrenAge0Days + childrenAge1Day;
+    }
+
+    public static int getMaturePopulation() {
+        return Math.max(0, getPopulationInstance().getAmount() - getChildrenNotInWorkforce());
+    }
+
+    public static int getAvailableWorkforce() {
+        return getMaturePopulation() - getTotalWorkforceUsed();
+    }
 
     // ---------------------------------------------------------------
     // Map
@@ -132,7 +164,7 @@ public class GameState {
 
     public static boolean hatGenugArbeitskraft(Buildings b) {
         if (b.getWorkforceRequired() <= 0) return true;
-        int verfuegbar = getPopulationInstance().getAmount() - getTotalWorkforceUsed();
+        int verfuegbar = getAvailableWorkforce();
         return verfuegbar >= b.getWorkforceRequired();
     }
 

@@ -35,8 +35,6 @@ public abstract class Buildings {
 
     public Resources getConsumedResource() { return null; }
     public int getConsumptionPerUnit() { return 0; }
-    public Resources getPopulationConsumedResource() { return null; }
-    public int getPopulationConsumptionPerUnit() { return 0; }
     public Set<String> getAllowedBiomes() { return null; }
 
     public int produceResources() {
@@ -56,7 +54,6 @@ public abstract class Buildings {
     }
 
     public int getWorkforceRequired() { return 0; }
-    public int getPopulationPerRound() { return 0; }
 
     public void printInfo() {
         IO.println("| " + displayName
