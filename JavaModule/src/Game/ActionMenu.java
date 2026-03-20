@@ -49,7 +49,7 @@ public class ActionMenu {
                 IO.println("Invalid Input: Please enter an INTEGER.");
             }
         }
-        IO.printlnSlowByChar(30,">> Difficulty: " + chosenMapSizeInt);
+        IO.printlnSlowByChar(30,">> MapSize: " + chosenMapSizeInt);
         IO.println("+---------------------------------------------+");
         IO.printlnSlow(1000,"");
         return chosenMapSizeInt;

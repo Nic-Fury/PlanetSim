@@ -24,17 +24,17 @@ public abstract class Events {
      * Static so it can be called without an instance: Events.triggerPossibleEvent()
      *
      * Event probabilities:
-     *  0-19: StormEvent (20%)
-     * 20-39: PerfectYieldEvent (20%)
-     * 40-99: No event (60%)
+     *  StormEvent (10%)
+     *  PerfectYieldEvent (10%)
+     *  No event (80%)
      */
     public static void triggerPossibleEvent() {
         int roll = (int) (Math.random() * 100);
 
         Events event = null;
-        if (roll < 20) {
+        if (roll < 10) {
             event = new StormEvent();
-        } else if (roll < 40) {
+        } else if (roll < 20) {
             event = new PerfectYieldEvent();
         } // else: no event (60%)
 

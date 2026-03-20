@@ -38,12 +38,11 @@ public class Round {
     }
 
     public static void startRound(int chosenMapSizeInt, int roundCounterInt){
-        // Start of a new day: children age; two-day-olds become workforce-eligible.
-        GameState.advanceChildhoodDay();
+        GameState.advanceChildhoodDay(); // Start of a new day: children age; two-day-olds become workforce-eligible.
         checkForWinningCondition(roundCounterInt);
         checkForLosingCondition();
         ActionMenu.printDayInfo(roundCounterInt);
-        printResourceUpdate(updateResources()); //updateResources() handles the logic of resource production and workforce synchronization, returns a map of what was produced this round for printing in printResourceUpdate()
+        printResourceUpdate(RoundResourceService.updateResourcesForRound()); //updateResources() handles the logic of resource production and workforce synchronization, returns a map of what was produced this round for printing in printResourceUpdate()
         Gameboard.printPlanet(chosenMapSizeInt);
         ActionMenu.printActionMenu(roundCounterInt);
         Events.triggerPossibleEvent();
@@ -128,13 +127,22 @@ public class Round {
      * Delegiert die komplette Tagesproduktion an den Resource-Service.
      * Round bleibt dadurch auf Ablaufsteuerung fokussiert.
      */
-    private static Map<String, Integer> updateResources() {
-        return RoundResourceService.updateResourcesForRound();
-    }
+//    private static Map<String, Integer> updateResources() {
+//        return RoundResourceService.updateResourcesForRound();
+//    }
 
     private static void printResourceUpdate(Map<String, Integer> producedThisRound) {
         for (Map.Entry<String, Integer> entry : producedThisRound.entrySet()) {
             IO.println(">> Today " + entry.getValue() + " " + entry.getKey() + " have been produced");
+        }
+        int childrenBornToday = GameState.getChildrenBornToday();
+        if (childrenBornToday != 0) {
+            IO.println(">> Today " + childrenBornToday + " children have been born");
+        }
+
+        int childrenReachedWorkingAgeToday = GameState.getChildrenReachedWorkingAgeToday();
+        if (childrenReachedWorkingAgeToday != 0) {
+            IO.println(">> Today " + childrenReachedWorkingAgeToday + " children reached working age");
         }
     }
 

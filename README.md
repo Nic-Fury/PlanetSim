@@ -2,8 +2,9 @@
 # PlanetSim  🪐🧬🌍
 _Projekt im Ramen der Advanced SWE Vorlesung 2025/26_
 
-Ein Consolen basiertes Simulationsspiel, in dem der Spieler die Aufgabe hat, einen Planeten zu erschaffen und zu erhalten.  
-Dabei muss er  die Ressourcen des Planeten im Auge behalten, um das Überleben und Entwickeln der Bewohner zu gewährleisten.
+Ein Consolen basiertes Simulationsspiel, in dem der Spieler die Aufgabe hat, einen Planeten zu verwalten und dessen Population zu erhalten und zu vergrößern.  
+Dabei muss er die Ressourcen des Planeten im Auge behalten, um das Überleben und Entwickeln der Bewohner zu gewährleisten.
+
 
 ## Cheats 🤑
 Man steurt das Spiel durch die Eingabe von Werten in der Console.  

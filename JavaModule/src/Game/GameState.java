@@ -25,6 +25,7 @@ public class GameState {
     // Population produced on the current day and previous day is not workforce yet.
     private static int childrenAge0Days = 0;
     private static int childrenAge1Day = 0;
+    private static int childrenReachedWorkingAgeToday = 0;
 
 
     public static GoldResources       getGoldInstance()       { return myGold; }
@@ -38,10 +39,12 @@ public class GameState {
     public static void resetChildhoodState() {
         childrenAge0Days = 0;
         childrenAge1Day = 0;
+        childrenReachedWorkingAgeToday = 0;
     }
 
     public static void advanceChildhoodDay() {
         // Children from yesterday age by one day; two-day-olds become workforce-eligible.
+        childrenReachedWorkingAgeToday = childrenAge1Day;
         childrenAge1Day = childrenAge0Days;
         childrenAge0Days = 0;
     }
@@ -53,6 +56,16 @@ public class GameState {
 
     public static int getChildrenNotInWorkforce() {
         return childrenAge0Days + childrenAge1Day;
+    }
+
+    /** Returns how many children were born during the current day. */
+    public static int getChildrenBornToday() {
+        return childrenAge0Days;
+    }
+
+    /** Returns how many children reached working age at the start of this day. */
+    public static int getChildrenReachedWorkingAgeToday() {
+        return childrenReachedWorkingAgeToday;
     }
 
     public static int getMaturePopulation() {
