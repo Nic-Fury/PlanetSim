@@ -1,10 +1,6 @@
 package Game;
 
-import Buildings.Buildings;
-import Buildings.ResidentialBuildings;
-import Resources.Resources;
 import Events.Events;
-import java.util.HashMap;
 import java.util.Map;
 
 public class Round {
@@ -129,92 +125,11 @@ public class Round {
 
 
     /**
-     * Delegates production to each placed building.
-     * Following the Information Expert principle, every building knows
-     * what it produces and consumes – this method just triggers them all generically.
-     * Adding a new building type requires zero changes here.
+     * Delegiert die komplette Tagesproduktion an den Resource-Service.
+     * Round bleibt dadurch auf Ablaufsteuerung fokussiert.
      */
     private static Map<String, Integer> updateResources() {
-
-        // --- Arbeitskraft-Bedarf aller platzierten Gebäude summieren ---
-        int totalWorkforceRequired = GameState.getPlacedBuildings().stream()
-                .mapToInt(Buildings::getWorkforceRequired)
-                .sum();
-
-        // Aggregiert produzierte Ressourcen dieser Runde (z. B. wood -> 8)
-        Map<String, Integer> producedThisRound = new HashMap<>();
-
-        for (Buildings building : GameState.getPlacedBuildings()) {
-
-            // --- Population durch Wohngebäude generieren ---
-            if (building instanceof ResidentialBuildings residentialBuilding
-                    && residentialBuilding.getPopulationPerRound() > 0) {
-                int populationToProduce = Math.min(
-                        residentialBuilding.getPopulationPerRound(),
-                        residentialBuilding.getRemainingPopulationCapacity()
-                );
-
-                if (populationToProduce <= 0) {
-                    continue;
-                }
-
-                Resources popFood = residentialBuilding.getPopulationConsumedResource();
-                int popCost      = residentialBuilding.getPopulationConsumptionPerUnit();
-
-                if (popFood != null && popCost > 0) {
-                    // Nur produzieren wenn genug Bread vorhanden
-                    int affordablePopulation = popFood.affordableUnits(popCost);
-                    populationToProduce = Math.min(populationToProduce, affordablePopulation);
-
-                    if (populationToProduce > 0) {
-                        popFood.subResources(populationToProduce * popCost);
-                        GameState.getPopulationInstance().addResources(populationToProduce);
-                        GameState.addChildrenProducedThisRound(populationToProduce);
-                        residentialBuilding.registerPopulationProduced(populationToProduce);
-                    } else {
-                        java.lang.IO.println(residentialBuilding.displayName.trim()
-                                + " could not generate Population - not enough "
-                                + popFood.getResourceTypeName() + "!");
-                    }
-                } else {
-                    // Kein Verbrauch noetig - direkt produzieren
-                    GameState.getPopulationInstance().addResources(populationToProduce);
-                    GameState.addChildrenProducedThisRound(populationToProduce);
-                    residentialBuilding.registerPopulationProduced(populationToProduce);
-                }
-            }
-
-            // --- Ressourcen-Produktion  ---
-            if (building.getProducedResource() == null || building.getProductionPerRound() <= 0) continue;
-
-            int produced = building.produceResources();
-
-            if (produced > 0) {
-                String resourceName = building.getProducedResource().getResourceTypeName();
-                producedThisRound.merge(resourceName, produced, Integer::sum);
-            } else {
-                java.lang.IO.println(building.displayName.trim() + " could not produce "
-                        + building.getProducedResource().getResourceTypeName()
-                        + " - not enough "
-                        + (building.getConsumedResource() != null
-                        ? building.getConsumedResource().getResourceTypeName()
-                        : "resources") + "!");
-            }
-        }
-
-        // --- Workforce synchronisieren: Population - benoetigte Arbeitskraft ---
-        int availableWorkforce = GameState.getMaturePopulation() - totalWorkforceRequired;
-        int currentWorkforce   = GameState.getWorkforceInstance().getAmount();
-        GameState.getWorkforceInstance().addResources(availableWorkforce - currentWorkforce);
-
-        return producedThisRound;
-
-        // --- Log: Arbeitskraft-Status --- (optional)
-        /*
-        java.lang.IO.println("Workforce available: " + GameState.getWorkforceInstance().getAmount()
-                + " (Population: " + GameState.getPopulationInstance().getAmount()
-                + " | Required: " + totalWorkforceRequired + ")");
-        */
+        return RoundResourceService.updateResourcesForRound();
     }
 
     private static void printResourceUpdate(Map<String, Integer> producedThisRound) {

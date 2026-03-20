@@ -60,7 +60,26 @@ public class GameState {
     }
 
     public static int getAvailableWorkforce() {
-        return getMaturePopulation() - getTotalWorkforceUsed();
+        return getMaturePopulation() - getTotalWorkforceRequired();
+    }
+
+    /**
+     * Returns the total workforce demand of all currently placed buildings.
+     */
+    public static int getTotalWorkforceRequired() {
+        return getPlacedBuildings().stream()
+                .mapToInt(Buildings::getWorkforceRequired)
+                .sum();
+    }
+
+    /**
+     * Synchronizes the workforce resource with the current simulation state.
+     * Workforce equals mature population minus total required workforce.
+     */
+    public static void synchronizeWorkforce() {
+        int availableWorkforce = getMaturePopulation() - getTotalWorkforceRequired();
+        int currentWorkforce = getWorkforceInstance().getAmount();
+        getWorkforceInstance().addResources(availableWorkforce - currentWorkforce);
     }
 
     // ---------------------------------------------------------------
@@ -168,10 +187,5 @@ public class GameState {
         return verfuegbar >= b.getWorkforceRequired();
     }
 
-    private static int getTotalWorkforceUsed() {
-        return getPlacedBuildings().stream()
-                .mapToInt(Buildings::getWorkforceRequired)
-                .sum();
-    }
 
 }
