@@ -12,6 +12,7 @@ Es werden immer die validen Optionen angezeigt, mit denen man das Spiel normalen
 Es gibt in manchen Fällen jedoch auch noch weitere Optionen, die **nicht vorgeschagen** werden  
 Diese können zu Testzwecken verwendet werden, um manche Szenarien beschläunigt zu erreichen:  
 - *ActionMenu:* `100` erlaubt es sich in einer Resource 100 Einheiten hinzuzufügen
+- *ActionMenu:* `999` zeigt das versteckte Highscore-Board aus `JavaModule/highscores.csv` an
 - *BuildMenu:* `100` plaziert eine Menge von verschiedenen Gebäuden auf einmal, ohne Resourcen zu verwenden
 
 ## Setup🧑‍💻

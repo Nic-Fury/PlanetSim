@@ -25,6 +25,9 @@ public class ActionHandler {
                     System.out.println("CHEAT ACTIVATED: Developer Mode");
                     executeDeveloperMode();
                     break;
+                case 999:
+                    HighScoreHandler.printHighScoreBoard();
+                    break;
                 default:
                     System.out.println("Invalid input. Please choose a valid action.");
             }
@@ -35,6 +38,7 @@ public class ActionHandler {
 
 
     public static void executeAction_Exit(){
+        //HighScoreHandler.saveCurrentGameResult("QUIT");    // If you quit your HigheScore will not be safed
         IO.println("Exiting the game. Goodbye!");
         System.exit(0);
     }

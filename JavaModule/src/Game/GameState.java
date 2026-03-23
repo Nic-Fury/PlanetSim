@@ -26,6 +26,8 @@ public class GameState {
     private static int childrenAge0Days = 0;
     private static int childrenAge1Day = 0;
     private static int childrenReachedWorkingAgeToday = 0;
+    private static String currentPlanetName = "Unknown";
+    private static int currentDay = 1;
 
 
     public static GoldResources       getGoldInstance()       { return myGold; }
@@ -35,6 +37,20 @@ public class GameState {
     public static StoneResources      getStoneInstance()      { return myStone; }
     public static WeedResources       getWeedInstance()       { return myWeed; }
     public static WorkforceResources getWorkforceInstance() { return myWorkforce; }
+    public static String getCurrentPlanetName() { return currentPlanetName; }
+    public static int getCurrentDay() { return currentDay; }
+
+    public static void setCurrentPlanetName(String planetName) {
+        if (planetName == null || planetName.trim().isEmpty()) {
+            currentPlanetName = "Unknown";
+            return;
+        }
+        currentPlanetName = planetName.trim();
+    }
+
+    public static void setCurrentDay(int day) {
+        currentDay = Math.max(1, day);
+    }
 
     public static void resetChildhoodState() {
         childrenAge0Days = 0;

@@ -28,6 +28,8 @@ public class Round {
         //Planet name
         String chosenPlanetName = ActionMenu.readPlanetName();
         int chosenMapSizeInt = ActionMenu.readMapSize();
+        GameState.setCurrentPlanetName(chosenPlanetName);
+        GameState.setCurrentDay(roundCounterInt);
 
         //reset Children Counter
         GameState.resetChildhoodState();
@@ -38,11 +40,12 @@ public class Round {
     }
 
     public static void startRound(int chosenMapSizeInt, int roundCounterInt){
+        GameState.setCurrentDay(roundCounterInt);
         GameState.advanceChildhoodDay(); // Start of a new day: children age; two-day-olds become workforce-eligible.
         checkForWinningCondition(roundCounterInt);
         checkForLosingCondition();
         ActionMenu.printDayInfo(roundCounterInt);
-        printResourceUpdate(RoundResourceService.updateResourcesForRound()); //updateResources() handles the logic of resource production and workforce synchronization, returns a map of what was produced this round for printing in printResourceUpdate()
+        printResourceUpdate(RoundResourceService.updateResourcesForRound()); //updateResourcesForRound() handles the logic of resource production and workforce synchronization, returns a map of what was produced this round for printing in printResourceUpdate()
         Gameboard.printPlanet(chosenMapSizeInt);
         ActionMenu.printActionMenu(roundCounterInt);
         Events.triggerPossibleEvent();
@@ -62,6 +65,7 @@ public class Round {
                     "||   ██║   ╚██████╔╝╚██████╔╝    ╚███╔███╔╝██║██║ ╚████║    ██╗ ||\n" +
                     "||   ╚═╝    ╚═════╝  ╚═════╝      ╚══╝╚══╝ ╚═╝╚═╝  ╚═══╝    ╚═╝ ||\n" +
                     "\\================================================================/");
+            HighScoreHandler.saveCurrentGameResult("WIN");
             System.exit(0);
 //            return true;
         }
@@ -92,6 +96,7 @@ public class Round {
                     "||                             ▀▀██           ██▀▀                          ||\n" +
                     "||                               ▀▀           ▀▀                            ||\n" +
                     "\\============================================================================/");
+            HighScoreHandler.saveCurrentGameResult("LOSE_POPULATION");
             System.exit(0);
         }
         if (GameState.getBreadInstance().getAmount() <= 0){
@@ -116,20 +121,11 @@ public class Round {
                     "||                             ▀▀██           ██▀▀                          ||\n" +
                     "||                               ▀▀           ▀▀                            ||\n" +
                     "\\============================================================================/");
+            HighScoreHandler.saveCurrentGameResult("LOSE_BREAD");
             System.exit(0);
         }
         return false;
     }
-
-
-
-    /**
-     * Delegiert die komplette Tagesproduktion an den Resource-Service.
-     * Round bleibt dadurch auf Ablaufsteuerung fokussiert.
-     */
-//    private static Map<String, Integer> updateResources() {
-//        return RoundResourceService.updateResourcesForRound();
-//    }
 
     private static void printResourceUpdate(Map<String, Integer> producedThisRound) {
         for (Map.Entry<String, Integer> entry : producedThisRound.entrySet()) {
