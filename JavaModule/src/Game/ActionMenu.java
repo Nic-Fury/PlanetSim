@@ -80,17 +80,18 @@ public class ActionMenu {
         IO.println("|             Choose one option:              |");
         IO.println("| [1] Build                                   |");
         IO.println("| [2] Do nothing                              |");
-        IO.println("| [3] Exit                                    |");
+        IO.println("| [3] Skills                                  |");
+        IO.println("| [4] Exit                                    |");
         IO.printlnSlow(1000,"+---------------------------------------------+");
         while (true) {
-            String input = IO.readln("Enter your choice for round "+roundCounterInt+" : (1-3) ");
+            String input = IO.readln("Enter your choice for round "+roundCounterInt+" : (1-4) ");
             int userinput;
             try {
                 userinput = Integer.parseInt(input.trim());
                 ActionHandler.executeAction(userinput);
                 break;
             } catch (NumberFormatException e) {
-                IO.println("Invalid Input: Please enter an INTEGER. (1-2)");
+                IO.println("Invalid Input: Please enter an INTEGER. (1-4)");
             }
         }
         IO.println("");

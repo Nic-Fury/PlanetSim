@@ -1,5 +1,7 @@
 package Game;
 
+import Skills.Skills;
+
 public class ActionHandler {
 
 
@@ -15,11 +17,10 @@ public class ActionHandler {
                     // Call method to build structures
                     break;
                 case 3:
-                    executeAction_Exit();
+                    openSkillMenu();
                     break;
                 case 4:
-                    System.out.println("You chose to end your turn.");
-                    // Call method to end turn
+                    executeAction_Exit();
                     break;
                 case 100:
                     System.out.println("CHEAT ACTIVATED: Developer Mode");
@@ -33,6 +34,64 @@ public class ActionHandler {
             }
     }
 
+    // --- Skill Menu Implementation ---
+
+    private static void openSkillMenu() {
+        IO.println();
+        IO.println("###############################################");
+        IO.println("#~~~~~~~~~~~~~~~~~~SkillMenu~~~~~~~~~~~~~~~~~~#");
+        IO.println("###############################################");
+
+        int idx = 1;
+        java.util.List<Skills> list = new java.util.ArrayList<>(GameState.getRegisteredSkills().values());
+        for (Skills s : list) {
+            int nextLevel = Math.min(s.getLevel() + 1, s.getMaxLevel());
+            String costText = s.isMaxLevel() ? "MAX" : String.valueOf(s.getUpgradeCostForNextLevel());
+            IO.println("| [" + idx + "] " + s.getDisplayName()
+                    + " | Next Lv: " + nextLevel
+                    + " | Cost: " + costText + " G  |");
+            idx++;
+        }
+        IO.println("| [0] Cancel                                  |");
+        IO.println("+---------------------------------------------+");
+
+        String input = IO.readln("Choose a skill to upgrade: ").trim();
+        int choice;
+        try {
+            choice = Integer.parseInt(input);
+        } catch (NumberFormatException e) {
+            IO.println("Invalid input.");
+            return;
+        }
+
+        if (choice == 0) return;
+        if (choice < 1 || choice > list.size()) {
+            IO.println("Invalid selection.");
+            return;
+        }
+
+        if (GameState.hasUpgradedSkillThisDay()) {
+            IO.println("You can only upgrade one skill per round.");
+            return;
+        }
+
+        Skills selected = list.get(choice - 1);
+        if (selected.isMaxLevel()) {
+            IO.println("Skill is already at max level.");
+            return;
+        }
+
+        int cost = selected.getUpgradeCostForNextLevel();
+        if (GameState.getGoldInstance().getAmount() < cost) {
+            IO.println("Not enough Gold. Upgrade failed.");
+            return;
+        }
+
+        GameState.getGoldInstance().subResources(cost);
+        selected.upgrade();
+        GameState.markSkillUpgradeForCurrentDay();
+        IO.println("Upgraded " + selected.getDisplayName() + " to level " + selected.getLevel() + ".");
+    }
 
 
 

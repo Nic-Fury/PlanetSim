@@ -2,9 +2,13 @@ package Game;
 
 import Resources.*;
 import Buildings.Buildings;
+import Skills.BetterToolsSkill;
+import Skills.Skills;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**********************************************************************
  *           Diese Klasse ist dazu da, um den Spielzustand
@@ -216,5 +220,40 @@ public class GameState {
         return verfuegbar >= b.getWorkforceRequired();
     }
 
+    // ---------------------------------------------------------------
+    // Skills
+    // ---------------------------------------------------------------
+
+    private static final Map<String, Skills> registeredSkills = new LinkedHashMap<>();
+    private static int currentSkillUpgradeDay = -1;
+
+    static {
+        registerSkill(new BetterToolsSkill());
+    }
+
+    public static void registerSkill(Skills skill) {
+        if (skill == null) return;
+        registeredSkills.put(skill.getId(), skill);
+    }
+
+    public static Map<String, Skills> getRegisteredSkills() {
+        return java.util.Collections.unmodifiableMap(registeredSkills);
+    }
+
+    public static Skills getSkillById(String id) {
+        return registeredSkills.get(id);
+    }
+
+    public static int getCurrentSkillUpgradeDay() {
+        return currentSkillUpgradeDay;
+    }
+
+    public static boolean hasUpgradedSkillThisDay() {
+        return currentSkillUpgradeDay == currentDay;
+    }
+
+    public static void markSkillUpgradeForCurrentDay() {
+        currentSkillUpgradeDay = currentDay;
+    }
 
 }
