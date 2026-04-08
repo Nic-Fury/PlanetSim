@@ -9,12 +9,11 @@ package Game;
  *          +----------------------------------+
  *          |	Waehle eine Action       	   |
  *          |       	        			   |
- *          |  1. Runde beenden		           |
- *          |  2. Meine Resourcen              |
- *          |  3. Bauen                        |
- *          |                                  |
- *          |  S. Speichern                    |
- *          |  B. Beenden                      |
+ *          |  1. Bauen                        |
+ *          |  2. Nichts tun                   |
+ *          |  3. Skills                       |
+ *          |  0. Runde beenden                |
+ *          |  4. Beenden                      |
  *          |                                  |
  *          +----------------------------------+
  *
@@ -63,7 +62,6 @@ public class ActionMenu {
     }
 
     public static void printActionMenu(int roundCounterInt){
-        printResources();
         printActions(roundCounterInt);
     }
 
@@ -77,24 +75,35 @@ public class ActionMenu {
     }
 
     public static void printActions(int roundCounterInt){
-        IO.println("|             Choose one option:              |");
-        IO.println("| [1] Build                                   |");
-        IO.println("| [2] Do nothing                              |");
-        IO.println("| [3] Skills                                  |");
-        IO.println("| [4] Exit                                    |");
-        IO.printlnSlow(1000,"+---------------------------------------------+");
         while (true) {
-            String input = IO.readln("Enter your choice for round "+roundCounterInt+" : (1-4) ");
-            int userinput;
-            try {
-                userinput = Integer.parseInt(input.trim());
-                ActionHandler.executeAction(userinput);
-                break;
-            } catch (NumberFormatException e) {
-                IO.println("Invalid Input: Please enter an INTEGER. (1-4)");
+            printResources();
+            IO.println("|             Choose one option:              |");
+            IO.println("| [1] Build                                   |");
+            IO.println("| [2] Do nothing                              |");
+            IO.println("| [3] Skills                                  |");
+            IO.println("| [0] End round                               |");
+            IO.println("| [4] Exit                                    |");
+            IO.printlnSlow(1000,"+---------------------------------------------+");
+
+            int userinput = readActionChoice(roundCounterInt);
+            ActionHandler.ActionFlow actionFlow = ActionHandler.executeAction(userinput);
+            IO.println("");
+
+            if (actionFlow == ActionHandler.ActionFlow.END_ROUND) {
+                return;
             }
         }
-        IO.println("");
+    }
+
+    private static int readActionChoice(int roundCounterInt) {
+        while (true) {
+            String input = IO.readln("Enter your choice for round " + roundCounterInt + " : (0-4) ");
+            try {
+                return Integer.parseInt(input.trim());
+            } catch (NumberFormatException e) {
+                IO.println("Invalid Input: Please enter an INTEGER. (0-4)");
+            }
+        }
     }
 
 

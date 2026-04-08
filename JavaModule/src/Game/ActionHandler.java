@@ -4,33 +4,42 @@ import Skills.Skills;
 
 public class ActionHandler {
 
+    public enum ActionFlow {
+        CONTINUE_ROUND,
+        END_ROUND
+    }
 
-    public static void executeAction(int userInput){
+
+    public static ActionFlow executeAction(int userInput){
             switch (userInput) {
                 case 1:
                     //System.out.println("You chose to build.");
                     // Call method to gather resources
                     BuildMenu.drawBuildMenu();
-                    break;
+                    return ActionFlow.CONTINUE_ROUND;
                 case 2:
                     System.out.println("You chose to do nothing.");
                     // Call method to build structures
-                    break;
+                    return ActionFlow.CONTINUE_ROUND;
                 case 3:
                     openSkillMenu();
-                    break;
+                    return ActionFlow.CONTINUE_ROUND;
+                case 0:
+                    IO.println("Ending the current round.");
+                    return ActionFlow.END_ROUND;
                 case 4:
                     executeAction_Exit();
-                    break;
+                    return ActionFlow.CONTINUE_ROUND;
                 case 100:
                     System.out.println("CHEAT ACTIVATED: Developer Mode");
                     executeDeveloperMode();
-                    break;
+                    return ActionFlow.CONTINUE_ROUND;
                 case 999:
                     HighScoreHandler.printHighScoreBoard();
-                    break;
+                    return ActionFlow.CONTINUE_ROUND;
                 default:
                     System.out.println("Invalid input. Please choose a valid action.");
+                    return ActionFlow.CONTINUE_ROUND;
             }
     }
 
