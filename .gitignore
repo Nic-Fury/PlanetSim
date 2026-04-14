@@ -4,3 +4,4 @@ out/
 # IntelliJ-spezifische Einstellungen
 .idea/
 *.iml
+/target/

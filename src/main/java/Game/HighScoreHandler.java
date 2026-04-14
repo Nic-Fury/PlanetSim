@@ -212,17 +212,17 @@ public class HighScoreHandler {
     }
 
     private static Path resolveHighScoreFilePath() {
-        Path configuredPath = Paths.get("JavaModule", "highscores.csv");
-        if (Files.exists(configuredPath)) {
-            return configuredPath;
+        Path resourcePath = Paths.get("src", "main", "resources", "highscores.csv");
+        if (Files.exists(resourcePath)) {
+            return resourcePath;
         }
 
-        Path fallbackPath = Paths.get("highscores.csv");
-        if (Files.exists(fallbackPath)) {
-            return fallbackPath;
+        Path legacyPath = Paths.get("highscores.csv");
+        if (Files.exists(legacyPath)) {
+            return legacyPath;
         }
 
-        return configuredPath;
+        return resourcePath;
     }
 
     private static String escapeCsv(String value) {
