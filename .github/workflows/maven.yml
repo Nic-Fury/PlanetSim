@@ -1,11 +1,4 @@
-# This workflow will build a Java project with Maven, and cache/restore any dependencies to improve the workflow execution time
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-maven
-
-# This workflow uses actions that are not certified by GitHub.
-# They are provided by a third-party and are governed by
-# separate terms of service, privacy policy, and support
-# documentation.
-
+# GitHub Actions workflow for Maven-based Java CI: it runs tests on pushes/PRs to main.
 name: Java CI with Maven
 
 on:
@@ -21,10 +14,13 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
+      # Checks out the repository so the runner can access project files.
       - uses: actions/checkout@v5
+      # Installs Temurin JDK and enables Maven dependency caching for faster CI runs.
       - uses: actions/setup-java@v5
         with:
           distribution: temurin
           java-version: '25'
           cache: maven
+      # Executes the Maven test phase using the project's pom.xml.
       - run: mvn -B test --file pom.xml
