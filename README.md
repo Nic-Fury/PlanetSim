@@ -23,4 +23,4 @@ Zusätzlich gibt es einige nicht vorgeschlagene Optionen für Tests und Debuggin
 - Java SDK 25 verwenden
 
 ## Testen
-Die Tests werden über Maven ausgeführt.
+Die Tests werden über Maven bei jedem Push auf `Main` ausgeführt.
