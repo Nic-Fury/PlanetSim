@@ -1,5 +1,6 @@
 package Game;
 
+import Buildings.Buildings;
 import Buildings.NormalHouse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
