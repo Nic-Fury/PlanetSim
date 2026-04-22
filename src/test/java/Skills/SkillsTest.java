@@ -72,4 +72,3 @@ class SkillsTest {
         assertEquals("Better Tools", testSkill.getDisplayName());
     }
 }
-
