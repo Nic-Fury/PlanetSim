@@ -10,6 +10,12 @@ class GameStateTest {
 
     @BeforeEach
     void resetState() {
+        // Aufräumen aller statischen Gebäude, die von anderen Tests platziert wurden
+        java.util.List<Buildings> placed = new java.util.ArrayList<>(GameState.getPlacedBuildings());
+        for (Buildings b : placed) {
+            GameState.removeBuilding(b);
+        }
+
         GameState.setCurrentMap(null);
         GameState.setCurrentPlanetName("Unknown");
         GameState.setCurrentDay(1);
@@ -85,4 +91,3 @@ class GameStateTest {
         assertEquals(beforeStone + (house.steinKosten / 2), GameState.getStoneInstance().getAmount());
     }
 }
-
