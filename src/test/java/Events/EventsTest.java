@@ -23,6 +23,17 @@ class EventsTest {
         public void applyEvent() {
             // no-op for base class tests
         }
+
+        @Override
+        public String stringASCIIArt() {
+            return "test ascii art";
+        }
+    }
+
+    @Test
+    void stringASCIIArtReturnsNonNullString() {
+        Events event = new TestEvent("Test", "Test", false);
+        assertNotNull(event.stringASCIIArt());
     }
 
     @Test
@@ -44,4 +55,3 @@ class EventsTest {
         assertDoesNotThrow(event::printEventOutro);
     }
 }
-

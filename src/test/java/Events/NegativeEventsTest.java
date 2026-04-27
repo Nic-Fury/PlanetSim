@@ -15,6 +15,11 @@ class NegativeEventsTest {
         public void applyEvent() {
             // no-op for behavior tests
         }
+
+        @Override
+        public String stringASCIIArt() {
+            return "";
+        }
     }
 
     @Test

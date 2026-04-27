@@ -63,5 +63,11 @@ class PerfectYieldEventTest {
             registeredForCleanup.add(farmLand);
         }
     }
-}
 
+    @Test
+    void stringASCIIArtReturnsNonNullString() {
+        PerfectYieldEvent event = new PerfectYieldEvent();
+        assertNotNull(event.stringASCIIArt());
+        assertFalse(event.stringASCIIArt().isEmpty());
+    }
+}

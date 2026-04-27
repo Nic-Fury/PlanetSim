@@ -58,5 +58,11 @@ class StormEventTest {
         int after = (int) GameState.getPlacedBuildings().stream().filter(b -> b instanceof FarmLand).count();
         assertTrue(after <= before, "Storm should never increase FarmLand count");
     }
-}
 
+    @Test
+    void stringASCIIArtReturnsNonNullString() {
+        StormEvent stormEvent = new StormEvent();
+        assertNotNull(stormEvent.stringASCIIArt());
+        assertFalse(stormEvent.stringASCIIArt().isEmpty());
+    }
+}
