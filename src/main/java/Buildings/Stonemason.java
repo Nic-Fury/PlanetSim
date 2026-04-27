@@ -16,7 +16,7 @@ public class Stonemason extends IndustryBuildings {
     public Resources getProducedResource() { return GameState.getStoneInstance(); }
 
     @Override
-    public int getProductionPerRound() { return Stone_PRO_RUNDE; }
+    public int getProductionPerRound() { return applyIndustrySkillBonus(Stone_PRO_RUNDE); }
 
     @Override
     public int getWorkforceRequired() { return 2; }

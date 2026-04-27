@@ -16,7 +16,7 @@ public class FarmLand extends IndustryBuildings {
     public Resources getProducedResource() { return GameState.getWeedInstance(); }
 
     @Override
-    public int getProductionPerRound() { return WEED_PRO_RUNDE; }
+    public int getProductionPerRound() { return applyIndustrySkillBonus(WEED_PRO_RUNDE); }
 
     @Override
     public int getWorkforceRequired() { return 1; }

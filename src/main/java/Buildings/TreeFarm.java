@@ -16,7 +16,7 @@ public class TreeFarm extends IndustryBuildings {
     public Resources getProducedResource() { return GameState.getWoodInstance(); }
 
     @Override
-    public int getProductionPerRound() { return HOLZ_PRO_RUNDE; }
+    public int getProductionPerRound() { return applyIndustrySkillBonus(HOLZ_PRO_RUNDE); }
 
     @Override
     public int getWorkforceRequired() { return 3; }

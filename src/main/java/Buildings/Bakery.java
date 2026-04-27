@@ -17,7 +17,7 @@ public class Bakery extends IndustryBuildings {
     public Resources getProducedResource()  { return GameState.getBreadInstance(); }
 
     @Override
-    public int getProductionPerRound()      { return BREAD_PRO_RUNDE; }
+    public int getProductionPerRound()      { return applyIndustrySkillBonus(BREAD_PRO_RUNDE); }
 
     @Override
     public Resources getConsumedResource()  { return GameState.getWeedInstance(); }
