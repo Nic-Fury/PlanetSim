@@ -12,8 +12,12 @@ public class PerfectYieldEvent extends PositiveEvents {
                 ">>You gain _50%_ more _WEED_ resources this round.");
     }
 
+
     @Override
     public void applyEvent() {
+
+        IO.println(stringASCIIArt());
+
         long farmlandCount = GameState.getPlacedBuildings().stream()
                 .filter(b -> b instanceof FarmLand)
                 .count();
@@ -29,5 +33,30 @@ public class PerfectYieldEvent extends PositiveEvents {
         IO.println(">>Perfect Yield: " + farmlandCount + " FarmLand(s) produced " + weedThisRound
                 + " Weed this round.\n" +
                 ">>Bonus: +" + bonus + " Weed!");
+    }
+
+    @Override
+    public String stringASCIIArt() {
+        return "" +
+                "           '\n" +
+                "          .      '      .\n" +
+                "    .      .     :     .      .\n" +
+                "     '.        ______       .'\n" +
+                "       '  _.-\"`      `\"-._ '\n" +
+                "        .'                '.\n" +
+                " `'--. /                    \\ .--'`\n" +
+                "      /                      \\\n" +
+                "     ;                        ;\n" +
+                "- -- |                        | -- -\n" +
+                "     |     _.                 |\n" +
+                "     ;    /__\\                ;\n" +
+                " .-'  \\   |= |;.______       /  '-.\n" +
+                "    _.-\"\"-|.' # '. `  `.----._\n" +
+                "          /       \\     \\  x   `\"\n" +
+                "     ----/    __   \\_.-'|-------\n" +
+                "     -=_ |   |  |  |    |- X.  =_\n" +
+                "    - __ |___|__|__|_.-'|_____\n" +
+                "        `'-._|_|;:;_.-'` '::.  `\"-\n" +
+                "     .:;.      .:.   ::.     '::.";
     }
 }

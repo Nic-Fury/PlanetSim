@@ -19,6 +19,8 @@ public abstract class Events {
 
     public abstract void applyEvent();
 
+    public abstract String stringASCIIArt();
+
     /**
      * Randomly selects and triggers an event.
      * Static so it can be called without an instance: Events.triggerPossibleEvent()
@@ -55,7 +57,7 @@ public abstract class Events {
     }
 
     public void printEventOutro() {
-        IO.println("############# END OF STORM EVENT ##############");
+        IO.println("################ END OF EVENT #################");
         IO.delay(4000);
         IO.println();
         IO.println();

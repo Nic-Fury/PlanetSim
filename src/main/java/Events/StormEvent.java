@@ -12,6 +12,9 @@ public class StormEvent extends NegativeEvents {
 
     @Override
     public void applyEvent() {
+
+        IO.println(stringASCIIArt());
+
         int roll = (int) (Math.random() * 100);
 
         IO.printlnSlowByChar(">>Results of the storm: ");
@@ -49,5 +52,33 @@ public class StormEvent extends NegativeEvents {
             IO.printlnSlowByChar("You lost ALL your WEED resources (-" + lost + " Weed)");
             IO.printlnSlowByChar("and ALL " + farmlands.size() + " FarmLand(s) have been destroyed!");
         }
+    }
+
+
+    @Override
+    public String stringASCIIArt() {
+        return "" +
+                " _____                     . '@(@@@@@@@)@. (@@) `  .   '\n" +
+                "(_____(_[h,       .  @@'((@@@@@@@@@@@)@@@@@)@@@@@@@)@\n" +
+                " oo  oo  o        @@(@@@@@@@@@@))@@@@@@@@@@@@@@@@)@@` .\n" +
+                "              @.((@@@@@@@)(@@@@@@@@@@@@@@))@\\@@@@@@@@@)@@@  .\n" +
+                "             (@@@@@@@@@@@@@@@@@@)@@@@@@@@@@@\\\\@@)@@@@@@@@)\n" +
+                "            (@@@@@@@@)@@@@@@@@@@@@@(@@@@@@@@//@@@@@@@@@) `\n" +
+                "      __o   .@(@@@@)##&&&&&(@@@@@@@@)::_=(@\\\\@@@@)@@ .   .'\n" +
+                "       /\\     @@`(@@)###&&&&&!!;;;;;;::-_=@@\\\\@)@`@.\n" +
+                "     _/|     `    @@(@###&&&&!!;;;;;::-=_=@.@\\\\@@     '\n" +
+                "    '  /     ,,  `  @.#####&&&!!;;;::=-_= .@  \\\\\n" +
+                "       `    &@__,      ####&&&!!;;::=_-   _--_  `      \n" +
+                "              \" \"       ###&&!!;;:-_=    `o--o'     ,,\n" +
+                "                          ##&&!;::_=               ~\\/~----~ \n" +
+                "                         ##&&!;:=        \\|--m/        /|--w\\ \n" +
+                "                          ##&&!:-       /\\/----~              \n" +
+                "                         #&!;:-        ~''~ \n" +
+                "                       #&!;=       \n" +
+                "                      #&!-\n" +
+                "                       #&=        \n" +
+                "                         #&-          \n" +
+                "                        \\\\#/'           \n" +
+                " ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^";
     }
 }

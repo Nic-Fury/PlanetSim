@@ -1,3 +1,4 @@
 name,population,gold,wood,stone,bread,weed,result,score
 
 2026-04-14 11:10:47,testtest,2,110,100,100,10,20,0,WIN,1830
+2026-04-27 12:27:52,2,15,30,45,67,88,0,0,LOSE_BREAD,500
