@@ -9,6 +9,26 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class GameStateTest {
 
+    private static class MockSkill extends Skills.Skills {
+        private final String id;
+        private final String displayName;
+
+        public MockSkill(String id, String displayName) {
+            this.id = id;
+            this.displayName = displayName;
+        }
+
+        @Override
+        public String getId() {
+            return id;
+        }
+
+        @Override
+        public String getDisplayName() {
+            return displayName;
+        }
+    }
+
     @BeforeEach
     void resetState() {
         // Aufräumen aller statischen Gebäude, die von anderen Tests platziert wurden
@@ -90,5 +110,31 @@ class GameStateTest {
         assertEquals(beforeGold + (house.goldKosten / 2), GameState.getGoldInstance().getAmount());
         assertEquals(beforeWood + (house.holzKosten / 2), GameState.getWoodInstance().getAmount());
         assertEquals(beforeStone + (house.steinKosten / 2), GameState.getStoneInstance().getAmount());
+    }
+
+    @Test
+    void customSkillCanBeRegisteredAndRetrieved() {
+        MockSkill testSkill = new MockSkill("test_skill_1", "Test Skill");
+        GameState.registerSkill(testSkill);
+
+        assertTrue(GameState.getRegisteredSkills().containsKey("test_skill_1"), "Skill should be in the registered skills map");
+        assertEquals(testSkill, GameState.getSkillById("test_skill_1"), "Retrieving by ID should return the exact MockSkill instance");
+    }
+
+    @Test
+    void skillUpgradeLimitPerDayIsEnforcedCorrectly() {
+        // Mock a current day manually
+        GameState.setCurrentDay(5);
+
+        // Before any upgrade taking place, it should be false
+        assertFalse(GameState.hasUpgradedSkillThisDay(), "Should be false initially");
+
+        GameState.markSkillUpgradeForCurrentDay();
+
+        assertTrue(GameState.hasUpgradedSkillThisDay(), "Should be true after marking an upgrade for today");
+
+        // Next Day
+        GameState.setCurrentDay(6);
+        assertFalse(GameState.hasUpgradedSkillThisDay(), "Should reset to false for a new day");
     }
 }

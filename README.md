@@ -10,17 +10,18 @@ Es werden die gültigen Optionen angezeigt.
 Zusätzlich gibt es einige nicht vorgeschlagene Optionen für Tests und Debugging:
 - `ActionMenu`: `100` fügt einer Resource 100 Einheiten hinzu
 - `BuildMenu`: `100` platziert mehrere Gebäude auf einmal, ohne Ressourcen zu verbrauchen
-- `ActionMenu`: `999` zeigt das versteckte Highscore-Board aus `src/main/resources/highscores.csv`
+- `ActionMenu`: `999` zeigt das versteckte **Highscore-Board** aus `src/main/resources/highscores.csv`
 
-## Projektstruktur
+## Setup 🧑‍💻
+- Repository klonen: `https://github.com/Nic-Fury/PlanetSim`
+- `src/test/java/Game/Main.java` ausführen:  
+`Main`
+>Java SDK 25 verwenden
+
+## Projektstruktur 📁
 - Produktionscode liegt unter `src/main/java`
 - Tests liegen unter `src/test/java`
 - Das Projekt ist als Maven-Projekt konfiguriert
 
-## Setup 🧑‍💻
-- Repository klonen: `https://github.com/Nic-Fury/PlanetSim`
-- In IntelliJ das Projekt als Maven-Projekt öffnen oder neu importieren
-- Java SDK 25 verwenden
-
-## Testen
-Die Tests werden über Maven bei jedem Push auf `Main` ausgeführt.
+## Testen 🧪
+Die Tests werden über Maven bei jedem Push auf `main-branche` ausgeführt.
